@@ -1,0 +1,7 @@
+
+@import url("../fonts/PacfontGood-yYye.ttf");
+
+.pac-man {
+    font-family:"PacFont Good";
+    -fx-font-family:"PacFont Good";
+}

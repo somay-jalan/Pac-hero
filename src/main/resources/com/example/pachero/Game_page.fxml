@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="567.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pachero.Game_page_controller">
+   <children>
+      <ImageView fx:id="blackscreen" fitHeight="578.0" fitWidth="767.0" layoutX="189.0" pickOnBounds="true" preserveRatio="true" scaleX="1.5" scaleY="1.1">
+         <image>
+            <Image url="@../../../images/A_black_image.jpg" />
+         </image>
+      </ImageView>
+      <AnchorPane fx:id="gamePane" prefHeight="567.0" prefWidth="1080.0" stylesheets="@../../../css_stylesheets/pixeboy_font.css">
+         <children>
+            <ImageView fitHeight="580.0" fitWidth="877.0" layoutX="110.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true" scaleX="1.25">
+               <image>
+                  <Image url="@../../../images/game_page_bg.png" />
+               </image>
+            </ImageView>
+            <Text fx:id="score" fill="WHITE" layoutX="540.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="pixeboy" text="0">
+               <font>
+                  <Font size="108.0" />
+               </font>
+            </Text>
+            <Text fx:id="lives" fill="WHITE" layoutX="136.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="pixeboy" text="0">
+               <font>
+                  <Font size="78.0" />
+               </font>
+            </Text>
+            <Text fx:id="cherries" fill="WHITE" layoutX="898.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="pixeboy" text="0">
+               <font>
+                  <Font size="78.0" />
+               </font>
+            </Text>
+            <ImageView fx:id="pacman_lives" fitHeight="102.0" fitWidth="109.0" layoutX="24.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../images/pacman_lives.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="pacman_cherries" fitHeight="102.0" fitWidth="109.0" layoutX="948.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../images/cherry.png" />
+               </image>
+            </ImageView>
+            <Rectangle fx:id="cur_platform" arcHeight="12.5" arcWidth="12.5" height="270.0" layoutX="194.0" layoutY="329.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="141.0">
+               <fill>
+                  <LinearGradient endX="1.0" endY="1.0" startX="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.38823530077934265" green="0.003921568859368563" blue="0.6901960968971252" />
+                           </color>
+                        </Stop>
+                        <Stop offset="0.4878048780487805">
+                           <color>
+                              <Color red="0.37400001287460327" blue="0.6800000071525574" opacity="0.5" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.3826049864292145" green="0.006899999920278788" blue="0.6899999976158142" opacity="0.0" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </fill>
+            </Rectangle>
+            <Rectangle fx:id="next_platform" arcHeight="12.5" arcWidth="12.5" height="270.0" layoutX="656.0" layoutY="329.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="102.0">
+               <fill>
+                  <LinearGradient endX="1.0" endY="1.0" startX="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.38823530077934265" green="0.003921568859368563" blue="0.6901960968971252" />
+                           </color>
+                        </Stop>
+                        <Stop offset="0.4878048780487805">
+                           <color>
+                              <Color red="0.37400001287460327" blue="0.6800000071525574" opacity="0.5" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.3826049864292145" green="0.006899999920278788" blue="0.6899999976158142" opacity="0.0" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </fill>
+            </Rectangle>
+            <Rectangle fx:id="perfect" arcHeight="5.0" arcWidth="5.0" height="65.0" layoutX="703.0" layoutY="268.0" stroke="TRANSPARENT" strokeType="INSIDE" width="9.0">
+               <fill>
+                  <LinearGradient endX="1.0" endY="0.9771863120137059" startX="0.9771862972825199">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color opacity="0.0" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color green="1.0" blue="0.6627451181411743" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </fill>
+            </Rectangle>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

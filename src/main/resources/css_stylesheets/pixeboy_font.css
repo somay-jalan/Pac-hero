@@ -1,0 +1,7 @@
+
+@import url("../fonts/Pixeboy.ttf");
+
+.pixeboy {
+    font-family:"Pixeboy";
+    -fx-font-family:"Pixeboy";
+}
