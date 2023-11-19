@@ -22,7 +22,7 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class start_page_controller implements Initializable {
+public class Start_page_controller implements Initializable {
 
     public Text dots;
     static Start_animation startAnimation;
@@ -49,7 +49,7 @@ public class start_page_controller implements Initializable {
 
     @FXML
     private void next_button(ActionEvent event) throws IOException {
-        FadeTransition fadeTransition = new FadeTransition(Duration.millis(800), landing_page);
+        FadeTransition fadeTransition = new FadeTransition(Duration.millis(800f), landing_page);
         fadeTransition.setFromValue(1);
         fadeTransition.setToValue(0);
         fadeTransition.setOnFinished(new EventHandler<ActionEvent>() {

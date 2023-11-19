@@ -28,7 +28,7 @@ public class Main extends Application {
     }
 
     public void dot_animation(){
-        start_page_controller.dot_animation();
+        Start_page_controller.dot_animation();
     }
     public static void main(String[] args) {
         launch();
