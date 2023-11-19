@@ -24,8 +24,11 @@ public class Game_page_controller implements Initializable {
     public Rectangle next_rectangle;
     public Rectangle perfect;
 
+    public Game_Logic gameLogic;
     public Platform cur_platform;
     public Platform next_platform;
+    public ImageView pacman;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         gamePane.setOpacity(0);

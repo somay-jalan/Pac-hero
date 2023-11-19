@@ -17,7 +17,7 @@
                <Image url="@../../../images/A_black_image.jpg" />
             </image>
          </ImageView>
-         <AnchorPane fx:id="landing_page" prefHeight="200.0" prefWidth="200.0">
+         <AnchorPane fx:id="landing_page" prefHeight="200.0" prefWidth="200.0" stylesheets="@../../../css_stylesheets/pixeboy_font.css">
             <children>
                <ImageView fitHeight="843.0" fitWidth="1080.0" pickOnBounds="true" preserveRatio="true">
                   <image>
@@ -47,12 +47,12 @@
                      <Font size="80.0" />
                   </font>
                </Text>
-               <Text fx:id="nextpage" fill="YELLOW" layoutX="285.0" layoutY="541.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="pac-man" text="Click here to play">
+               <Text fx:id="nextpage" fill="RED" layoutX="320.0" layoutY="541.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="pixeboy" text="Click here to play">
                   <font>
-                     <Font size="40.0" />
+                     <Font size="60.0" />
                   </font>
                </Text>
-               <Button fx:id="next_page" layoutX="280.0" layoutY="509.0" mnemonicParsing="false" onAction="#next_button" prefHeight="30.0" style="-fx-opacity: 0;" text="10000000000000000000000000000000000000000000000000000000000" textFill="TRANSPARENT" />
+               <Button fx:id="next_page" layoutX="293.0" layoutY="510.0" mnemonicParsing="false" onAction="#next_button" prefHeight="30.0" style="-fx-opacity: 0;" text="10000000000000000000000000000000000000000000000000000000000" textFill="TRANSPARENT" />
             </children>
          </AnchorPane>
       </children>
