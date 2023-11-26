@@ -49,7 +49,8 @@ public class Game_page_controller implements Initializable {
         perfect=new Perfect(perfect_rectangle);
         pacman=new Pacman( new Costume(pacman_image));
         pacmanStick=new Pacman_Stick(pacman_stick);
-        gameLogic=new Game_Logic(pacman,cur_platform,next_platform,perfect,pacmanStick);
+        gameLogic=new Game_Logic(pacman,cur_platform,next_platform,perfect,pacmanStick,gamePane,score);
+        pacman.setGameLogic(gameLogic);
         StartGame();
     }
 

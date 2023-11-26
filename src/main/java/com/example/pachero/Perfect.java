@@ -15,8 +15,14 @@ public class Perfect {
         this.rectangle=rectangle;
     }
 
-    public void relocate(double v, double v1) {
-        rectangle.relocate(v, v1);
+    public void relocate(double v1) {
+        Timeline timeline=new Timeline(
+                new KeyFrame(Duration.ZERO,new KeyValue(rectangle.layoutXProperty(),rectangle.getLayoutY())),
+                new KeyFrame(Duration.millis(10),new KeyValue(rectangle.layoutXProperty(),v1))
+        );
+        timeline.setDelay(Duration.millis(500));
+        rectangle.toFront();
+        timeline.play();
     }
 
     public void animationFadeIn(){
@@ -25,21 +31,42 @@ public class Perfect {
         fadeTransition.setToValue(1);
         fadeTransition.setDelay(Duration.millis(500));
         fadeTransition.play();
+        fadeTransition.setOnFinished(event -> {
+//            System.out.println("PERFECT");
+//            System.out.println(rectangle.getLayoutX());
+//            System.out.println(rectangle.getLayoutY());
+        });
         FlameAnimation();
     }
-
+    private Timeline timelineFlame;
     private void FlameAnimation() {
-        Timeline timeline = new Timeline(
+        timelineFlame= new Timeline(
+
                 new KeyFrame(Duration.ZERO, new KeyValue(rectangle.opacityProperty(), 0.5)),
-                new KeyFrame(Duration.seconds(1), new KeyValue(rectangle.opacityProperty(), 1))
+                new KeyFrame(Duration.millis(1000), new KeyValue(rectangle.opacityProperty(), 1))
         );
 
-        timeline.setCycleCount(Animation.INDEFINITE);
-        timeline.setAutoReverse(true);
-        timeline.setDelay(Duration.millis(2300));
-        timeline.play();
+        timelineFlame.setCycleCount(Animation.INDEFINITE);
+        timelineFlame.setAutoReverse(true);
+        timelineFlame.setDelay(Duration.millis(2300));
+        timelineFlame.play();
     }
     public void animationFadeOut(){
+        timelineFlame.pause();
+        Timeline timelineFadeOut=new Timeline(
+                new KeyFrame(Duration.ZERO,new KeyValue(rectangle.opacityProperty(),rectangle.getOpacity())),
+                new KeyFrame(Duration.millis(50),new KeyValue(rectangle.opacityProperty(),0))
+        );
+//        timelineFadeOut.setDelay(Duration.millis(50));
+        timelineFadeOut.play();
+    }
+
+    public Rectangle getRectangle() {
+        return rectangle;
+    }
+
+    public void perfectAnimation(){
+
     }
 
 }
