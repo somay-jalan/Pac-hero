@@ -19,12 +19,12 @@
          </ImageView>
          <AnchorPane fx:id="landing_page" prefHeight="200.0" prefWidth="200.0" stylesheets="@../../../css_stylesheets/pixeboy_font.css">
             <children>
-               <ImageView fitHeight="843.0" fitWidth="1080.0" pickOnBounds="true" preserveRatio="true">
+               <ImageView fitHeight="843.0" fitWidth="1080.0" pickOnBounds="true" preserveRatio="true" scaleX="2.0">
                   <image>
                      <Image url="@../../../images/A_black_image.jpg" />
                   </image>
                </ImageView>
-               <ImageView fitHeight="720.0" fitWidth="1080.0" layoutY="91.0" onMouseClicked="#next_button" opacity="0.37" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="112.76201171875005" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.7999999999999545" AnchorPane.topAnchor="91.0">
+               <ImageView fitHeight="843.0" fitWidth="1080.0" layoutY="91.0" opacity="0.37" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="112.76201171875005" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.7999999999999545" AnchorPane.topAnchor="91.0">
                   <Image url="@../../../images/start_wallpaper.jpg" />
                </ImageView>
                <Text fx:id="eater" fill="YELLOW" layoutX="250.0" layoutY="484.0" lineSpacing="5.0" strokeDashOffset="50.0" strokeLineCap="BUTT" strokeLineJoin="ROUND" strokeType="INSIDE" styleClass="pac-man" text="1" textAlignment="CENTER" wrappingWidth="82.4000244140625" x="100.0">

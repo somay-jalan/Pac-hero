@@ -3,7 +3,6 @@ package com.example.pachero;
 import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -48,24 +47,18 @@ public class Start_page_controller implements Initializable {
     }
 
     @FXML
-    private void next_button(ActionEvent event) throws IOException {
-        FadeTransition fadeTransition = new FadeTransition(Duration.millis(800f), landing_page);
+    private void next_button(ActionEvent event) {
+        FadeTransition fadeTransition = new FadeTransition(Duration.millis(800), landing_page);
         fadeTransition.setFromValue(1);
         fadeTransition.setToValue(0);
-        fadeTransition.setOnFinished(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event1) {
-                try {
-                    loadnextscreen(event);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+        fadeTransition.setOnFinished(event1 -> {
+            try {
+                loadnextscreen(event);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         });
         fadeTransition.play();
-
-
-
     }
     private void loadnextscreen(ActionEvent event) throws IOException {
         Stage stage;
@@ -75,6 +68,8 @@ public class Start_page_controller implements Initializable {
         stage=(Stage)((Node)event.getSource()).getScene().getWindow();
         scene=new Scene(root);
         stage.setScene(scene);
+        scene.setOnKeyPressed(Game_page_controller.gameLogic::keyboardControl);
+        scene.setOnKeyReleased(Game_page_controller.gameLogic::keyboardControl);
         stage.show();
     }
 

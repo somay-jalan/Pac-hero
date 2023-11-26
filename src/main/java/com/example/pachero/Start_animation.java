@@ -37,7 +37,7 @@ public class Start_animation implements Runnable {
             textoutput.writeText("");
             Thread.sleep(animationTime);
         }catch(InterruptedException e){
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 

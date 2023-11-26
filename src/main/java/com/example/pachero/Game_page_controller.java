@@ -1,14 +1,15 @@
 package com.example.pachero;
-
-import javafx.animation.FadeTransition;
+import javafx.animation.*;
 import javafx.fxml.Initializable;
+
+import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
-import java.net.ResponseCache;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -22,12 +23,22 @@ public class Game_page_controller implements Initializable {
     public ImageView pacman_cherries;
     public Rectangle cur_rectangle;
     public Rectangle next_rectangle;
-    public Rectangle perfect;
+    public Rectangle perfect_rectangle;
 
-    public Game_Logic gameLogic;
+    public static Game_Logic gameLogic;
     public Platform cur_platform;
     public Platform next_platform;
-    public ImageView pacman;
+    public Perfect perfect;
+    public ImageView pacman_image;
+    public Line pacman_stick;
+    public Pacman pacman;
+
+    public Pacman_Stick pacmanStick;
+
+    public Scene scene;
+
+
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -35,6 +46,11 @@ public class Game_page_controller implements Initializable {
         fadeintransition();
         cur_platform=new Platform(cur_rectangle);
         next_platform=new Platform(next_rectangle);
+        perfect=new Perfect(perfect_rectangle);
+        pacman=new Pacman( new Costume(pacman_image));
+        pacmanStick=new Pacman_Stick(pacman_stick);
+        gameLogic=new Game_Logic(pacman,cur_platform,next_platform,perfect,pacmanStick);
+        StartGame();
     }
 
     private void fadeintransition() {
@@ -44,5 +60,18 @@ public class Game_page_controller implements Initializable {
         fadeTransition.play();
     }
 
+    private void StartGame(){
+        gameLogic.GameStart();
+    }
+
+
+
+
+
+
 
 }
+
+
+
+
