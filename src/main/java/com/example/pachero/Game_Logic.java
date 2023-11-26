@@ -1,13 +1,11 @@
 package com.example.pachero;
 
-import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
-import javafx.util.Duration;
 
 public class Game_Logic {
     private Pacman pacman;
@@ -43,8 +41,9 @@ public class Game_Logic {
     public void GameStart() {
         next_platform.setRectangle(next_platform.newRectangle());
         gamePane.getChildren().add(next_platform.getRectangle());
-        perfect.relocate(next_platform.getRectangle().getLayoutX()+(next_platform.getRectangle().getWidth()/2));
+        perfect.relocate(next_platform.getRectangle().getLayoutX()+(next_platform.getRectangle().getWidth()/2)-(perfect.getRectangle().getWidth()/2));
 //        perfect.animationFadeIn();
+        pacmanStick.getLine().toFront();
         cur_platform.animateRectangleFadeIn();
         next_platform.animateRectangleFadeIn();
         perfect.animationFadeIn();
@@ -61,7 +60,7 @@ public class Game_Logic {
             cur_platform.setRectangle(next_platform.getRectangle());
             next_platform.setRectangle(next_platform.newRectangle());
             gamePane.getChildren().add(next_platform.getRectangle());
-            perfect.relocate(next_platform.getRectangle().getLayoutX()+(next_platform.getRectangle().getWidth()/2)-5);
+            perfect.relocate(next_platform.getRectangle().getLayoutX()+(next_platform.getRectangle().getWidth()/2)-(perfect.getRectangle().getWidth()/2));
             perfect.animationFadeIn();
             next_platform.animateRectangleFadeIn();
             perfect.getRectangle().toFront();
@@ -89,7 +88,7 @@ public class Game_Logic {
             }
         }
         if(key_pressed==0){
-            if(keyEvent.getEventType()==KeyEvent.KEY_RELEASED){
+            if(keyEvent.getEventType()==KeyEvent.KEY_RELEASED && keyEvent.getCode() == KeyCode.SPACE ){
                 key_pressed=1;
                 pacmanStick.StopIncreaseLength();
                 pacman.rotateBack(90);
@@ -101,4 +100,99 @@ public class Game_Logic {
         }
     }
 
+    public Pacman getPacman() {
+        return pacman;
+    }
+
+    public void setPacman(Pacman pacman) {
+        this.pacman = pacman;
+    }
+
+    public Platform getCur_platform() {
+        return cur_platform;
+    }
+
+    public void setCur_platform(Platform cur_platform) {
+        this.cur_platform = cur_platform;
+    }
+
+    public Platform getNext_platform() {
+        return next_platform;
+    }
+
+    public void setNext_platform(Platform next_platform) {
+        this.next_platform = next_platform;
+    }
+
+    public Perfect getPerfect() {
+        return perfect;
+    }
+
+    public void setPerfect(Perfect perfect) {
+        this.perfect = perfect;
+    }
+
+    public Pacman_Stick getPacmanStick() {
+        return pacmanStick;
+    }
+
+    public void setPacmanStick(Pacman_Stick pacmanStick) {
+        this.pacmanStick = pacmanStick;
+    }
+
+    public Ghost getGhost() {
+        return ghost;
+    }
+
+    public void setGhost(Ghost ghost) {
+        this.ghost = ghost;
+    }
+
+    public Cherry getCherry() {
+        return cherry;
+    }
+
+    public void setCherry(Cherry cherry) {
+        this.cherry = cherry;
+    }
+
+    public Scene getScene() {
+        return scene;
+    }
+
+    public void setScene(Scene scene) {
+        this.scene = scene;
+    }
+
+    public Text getScore() {
+        return score;
+    }
+
+    public void setScore(Text score) {
+        this.score = score;
+    }
+
+    public AnchorPane getGamePane() {
+        return gamePane;
+    }
+
+    public void setGamePane(AnchorPane gamePane) {
+        this.gamePane = gamePane;
+    }
+
+    public int getRotated() {
+        return rotated;
+    }
+
+    public void setRotated(int rotated) {
+        this.rotated = rotated;
+    }
+
+    public int getKey_pressed() {
+        return key_pressed;
+    }
+
+    public void setKey_pressed(int key_pressed) {
+        this.key_pressed = key_pressed;
+    }
 }

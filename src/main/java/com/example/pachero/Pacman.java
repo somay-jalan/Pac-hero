@@ -76,7 +76,7 @@ public class Pacman {
     }
 
     public void goToStart(){
-        pacman.getPacman_costume().setRotate(180);
+//        pacman.getPacman_costume().setRotate(180);
         Timeline timeline=new Timeline(
                 new KeyFrame(Duration.ZERO,new KeyValue(pacman.getPacman_costume().layoutXProperty(),pacman.getPacman_costume().getLayoutX())),
                 new KeyFrame(Duration.millis(350),new KeyValue(pacman.getPacman_costume().layoutXProperty(),startLayoutX))

@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="567.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pachero.Game_page_controller">
+<AnchorPane prefHeight="567.0" prefWidth="1080.0" stylesheets="@../../../css_stylesheets/pacman_font.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pachero.Game_page_controller">
    <children>
       <ImageView fx:id="blackscreen" fitHeight="578.0" fitWidth="767.0" layoutX="189.0" pickOnBounds="true" preserveRatio="true" scaleX="1.5" scaleY="1.1">
          <image>

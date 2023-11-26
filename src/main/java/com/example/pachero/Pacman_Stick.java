@@ -12,12 +12,14 @@ import javafx.util.Duration;
 public class Pacman_Stick {
 
 
-    public Line line;
+    private Line line;
 
+    private Game_Logic gameLogic;
     public final double startLayoutX=310;
     public final double startLayoutY=320;
 
     public Pacman_Stick(Line line){
+
         this.line=line;
     }
     public void IncreaseLength(){
@@ -73,10 +75,19 @@ public class Pacman_Stick {
 //        System.out.println(line.rotationAxisProperty());
         Timeline timeline=new Timeline(
                 new KeyFrame(Duration.ZERO,new KeyValue(line.layoutYProperty(),line.getLayoutY())),
-                new KeyFrame(Duration.millis(300),new KeyValue(line.layoutYProperty(),line.getLayoutY()+25))
+                new KeyFrame(Duration.millis(300),new KeyValue(line.layoutYProperty(),line.getLayoutY()+24))
         );
         timeline.setCycleCount(1);
         timeline.setDelay(Duration.millis(0));
+        timeline.setOnFinished(event1 -> {
+//            System.out.println(line.getLayoutX());
+//            System.out.println(line.getEndY());
+//            System.out.println(gameLogic.getPerfect().getRectangle().getLayoutX());
+            if(gameLogic.getPerfect().getRectangle().getLayoutX()<(getLine().getLayoutX()+Math.abs(getLine().getEndY())) && gameLogic.getPerfect().getRectangle().getLayoutX()+gameLogic.getPerfect().getRectangle().getWidth()>=(getLine().getLayoutX()+Math.abs(getLine().getEndY()))){
+                gameLogic.getPerfect().perfectAnimation();
+            }
+        });
+
         timeline.play();
     }
 
@@ -88,5 +99,9 @@ public class Pacman_Stick {
 
     public Line getLine() {
         return line;
+    }
+
+    public void setGameLogic(Game_Logic gameLogic) {
+        this.gameLogic = gameLogic;
     }
 }
