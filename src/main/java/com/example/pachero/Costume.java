@@ -24,7 +24,7 @@ public class Costume {
         pacman_costume.setImage(new Image(getClose_url()));
     }
 
-    public void chnageToOpen(){
+    public void changeToOpen(){
         pacman_costume.setImage(new Image(getOpen_url()));
     }
 

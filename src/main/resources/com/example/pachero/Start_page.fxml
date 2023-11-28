@@ -52,7 +52,7 @@
                      <Font size="60.0" />
                   </font>
                </Text>
-               <Button fx:id="next_page" layoutX="293.0" layoutY="510.0" mnemonicParsing="false" onAction="#next_button" prefHeight="30.0" style="-fx-opacity: 0;" text="10000000000000000000000000000000000000000000000000000000000" textFill="TRANSPARENT" />
+               <Button fx:id="next_page" layoutY="6.0" mnemonicParsing="false" onAction="#next_button" prefHeight="786.0" prefWidth="1080.0" style="-fx-opacity: 0;" text="10000000000000000000000000000000000000000000000000000000000" textFill="TRANSPARENT" />
             </children>
          </AnchorPane>
       </children>
