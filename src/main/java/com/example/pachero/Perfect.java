@@ -110,7 +110,12 @@ public class Perfect {
         rightStripe.setFitWidth(434);
         rightStripe.setFitHeight(44);
         rightStripe.setOpacity(0);
-        addGhost();
+        if(gameLogic.getNext_platform().getRectangle().getBoundsInParent().getMinX()-gameLogic.getCur_platform().getRectangle().getBoundsInParent().getMaxX()>gameLogic.getPacman().getPacman().getPacman_costume().getFitWidth()*4){
+            addGhost();
+        }
+        else{
+            ghostText.setVisible(false);
+        }
         Timeline timelineLeftStripe=new Timeline(
                 new KeyFrame(Duration.ZERO,new KeyValue(leftStripe.layoutXProperty(),-434,Interpolator.EASE_IN),new KeyValue(leftStripe.opacityProperty(),1)),
                 new KeyFrame(Duration.millis(500),new KeyValue(leftStripe.layoutXProperty(),0,Interpolator.EASE_IN),new KeyValue(leftStripe.opacityProperty(),1)),
@@ -134,7 +139,10 @@ public class Perfect {
         timelineText.play();
         gamePane.getChildren().addAll(leftStripe,rightStripe,perfectText,ghostText);
         gameLogic.getScore().setText(String.valueOf(Integer.parseInt(gameLogic.getScore().getText())+1));
-        rightStripe.setOpacity(0);
+        gameLogic.getScore().setWrappingWidth(gameLogic.getScore().getText().length()*55);
+        if(gameLogic.getScore().getText().length()!=(String.valueOf(Integer.parseInt(gameLogic.getScore().getText())-1)).length()) {
+            gameLogic.getScore().setLayoutX(gameLogic.getScore().getLayoutX() - (gameLogic.getScore().getWrappingWidth() - 55));
+        }        rightStripe.setOpacity(0);
         leftStripe.setOpacity(0);
         perfectText.setOpacity(0);
     }

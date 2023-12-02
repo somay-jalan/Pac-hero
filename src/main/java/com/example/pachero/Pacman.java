@@ -1,6 +1,10 @@
 package com.example.pachero;
 
 import javafx.animation.*;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.util.Duration;
 
 public class Pacman {
@@ -19,9 +23,10 @@ public class Pacman {
     private Timeline timelineRelocate;
     private Timeline timelineMouthAnimation;
     public void relocate(double v){
+        double duration=Math.abs((double) 3000 /242*gameLogic.getPacmanStick().getLine().getEndY());
         timelineRelocate=new Timeline(
                 new KeyFrame(Duration.ZERO,new KeyValue(pacman.getPacman_costume().layoutXProperty(),pacman.getPacman_costume().getLayoutX())),
-                new KeyFrame(Duration.millis(3000),new KeyValue(pacman.getPacman_costume().layoutXProperty(),v))
+                new KeyFrame(Duration.millis(duration),new KeyValue(pacman.getPacman_costume().layoutXProperty(),v))
         );
         timelineRelocate.setCycleCount(1);
         timelineRelocate.setDelay(Duration.millis(1050));
@@ -33,9 +38,35 @@ public class Pacman {
                 new KeyFrame(Duration.millis(175),event -> pacman.changeToClose()),
                 new KeyFrame(Duration.millis(350),event -> pacman.changeToOpen())
         );
-        timelineMouthAnimation.setCycleCount(8);
+        timelineMouthAnimation.setCycleCount((int) (duration/350));
         timelineMouthAnimation.setDelay(Duration.millis(1050));
         timelineMouthAnimation.play();
+        BooleanBinding checkPlatformPacmanCollision= Bindings.createBooleanBinding(
+                ()->gameLogic.getNext_platform().getRectangle().getBoundsInParent().intersects(gameLogic.getPacman().getPacman().getPacman_costume().getBoundsInParent()),
+                gameLogic.getNext_platform().getRectangle().boundsInParentProperty(),
+                gameLogic.getPacman().getPacman().getPacman_costume().boundsInParentProperty()
+        );
+        ChangeListener<Boolean> collisionListener=new ChangeListener<>() {
+            @Override
+            public void changed(ObservableValue obs, Boolean wasCollision, Boolean isNowCollision) {
+//                System.out.println(ghost.boundsInParentProperty());
+//                System.out.println(gameLogic.getPacman().getPacman().getPacman_costume().boundsInParentProperty());
+//                System.out.println(obs);
+//                System.out.println(wasCollision);
+//                System.out.println(isNowCollision);
+                if(isNowCollision && !wasCollision){
+                    gameLogic.getPacman().getTimelineRelocate().pause();
+                    gameLogic.getPacman().getTimelineMouthAnimation().pause();
+                    gameLogic.setStopKeyboard(1);
+                    gameLogic.getPacman().getPacman().changeToOpen();
+                    gameLogic.setData();
+                    gameLogic.getPacman().goIntoOblivion();
+                    checkPlatformPacmanCollision.removeListener(this);
+
+                }
+            }
+        };
+        checkPlatformPacmanCollision.addListener(collisionListener );
     }
 
     public void rotate(double angle){
@@ -102,10 +133,18 @@ public class Pacman {
         gameLogic.setStopKeyboard(1);
         Timeline timelineOblivion=new Timeline(
                 new KeyFrame(Duration.ZERO,new KeyValue(pacman.getPacman_costume().layoutYProperty(),pacman.getPacman_costume().getLayoutY())),
-                new KeyFrame(Duration.millis(1000),new KeyValue(pacman.getPacman_costume().layoutYProperty(),567))
+                new KeyFrame(Duration.millis(1000),new KeyValue(pacman.getPacman_costume().layoutYProperty(),600))
         );
         timelineOblivion.play();
         timelineOblivion.setOnFinished(event -> {
+            Timeline timeShake=new Timeline(
+                    new KeyFrame(Duration.ZERO,new KeyValue(gameLogic.getGamePane().layoutXProperty(),gameLogic.getGamePane().getLayoutX()),new KeyValue(gameLogic.getGamePane().layoutYProperty(),gameLogic.getGamePane().getLayoutY())),
+                    new KeyFrame(Duration.millis(50)/*,new KeyValue(gameLogic.getGamePane().layoutXProperty(),gameLogic.getGamePane().getLayoutX()-5)*/,new KeyValue(gameLogic.getGamePane().layoutYProperty(),gameLogic.getGamePane().getLayoutY()-5)),
+                    new KeyFrame(Duration.millis(75)/*,new KeyValue(gameLogic.getGamePane().layoutXProperty(),gameLogic.getGamePane().getLayoutX()+4)*/,new KeyValue(gameLogic.getGamePane().layoutYProperty(),gameLogic.getGamePane().getLayoutY()+3)),
+                    new KeyFrame(Duration.millis(88)/*,new KeyValue(gameLogic.getGamePane().layoutXProperty(),gameLogic.getGamePane().getLayoutX()-2)*/,new KeyValue(gameLogic.getGamePane().layoutYProperty(),gameLogic.getGamePane().getLayoutY()-2)),
+                    new KeyFrame(Duration.millis(98)/*,new KeyValue(gameLogic.getGamePane().layoutXProperty(),gameLogic.getGamePane().getLayoutX()+1)*/ ,new KeyValue(gameLogic.getGamePane().layoutYProperty(),gameLogic.getGamePane().getLayoutY()+1))
+            );
+            timeShake.play();
             gameLogic.setData();
         });
         Timeline timelineRotate=new Timeline(
@@ -113,6 +152,9 @@ public class Pacman {
                 new KeyFrame(Duration.millis(333),new KeyValue(pacman.getPacman_costume().rotateProperty(),360))
         );
         timelineRotate.setCycleCount(3);
+        timelineRotate.setOnFinished(event -> {
+            gameLogic.gameEndMenu();
+        });
         timelineRotate.play();
     }
 
@@ -147,4 +189,13 @@ public class Pacman {
     public void setTimelineMouthAnimation(Timeline timelineMouthAnimation) {
         this.timelineMouthAnimation = timelineMouthAnimation;
     }
+
+    public void restart() {
+        getPacman().getPacman_costume().setOpacity(0);
+        getPacman().getPacman_costume().setLayoutX(startLayoutX);
+        getPacman().getPacman_costume().setLayoutY(startLayoutY);
+        animationFadeIn();
+    }
+
+
 }

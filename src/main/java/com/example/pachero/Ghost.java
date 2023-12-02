@@ -17,10 +17,8 @@ public class Ghost{
     private double y;
 
     private final ImageView ghost;
-
     private Game_Logic gameLogic;
     public Ghost(ImageView ghost,Game_Logic gameLogic){
-
         this.ghost=ghost;
         this.gameLogic=gameLogic;
     }
@@ -47,13 +45,15 @@ public class Ghost{
 //                System.out.println(wasCollision);
 //                System.out.println(isNowCollision);
                 if(isNowCollision && !wasCollision){
-                    timelineGhostRelocate.pause();
+//                    timelineGhostRelocate.pause();
                     gameLogic.getPacman().getTimelineRelocate().pause();
                     gameLogic.getPacman().getTimelineMouthAnimation().pause();
                     gameLogic.setStopKeyboard(1);
                     gameLogic.getPacman().getPacman().changeToOpen();
                     gameLogic.setData();
+                    gameLogic.getPacman().goIntoOblivion();
                     checkGhostPacmanCollision.removeListener(this);
+
 
                 }
             }

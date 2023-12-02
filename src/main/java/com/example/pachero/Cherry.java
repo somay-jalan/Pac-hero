@@ -40,8 +40,11 @@ public class Cherry{
                     removed=1;
                     removeCherry();
                     gameLogic.getCherries().setText(String.valueOf(Integer.parseInt(gameLogic.getCherries().getText())+1));
+                    gameLogic.getCherries().setWrappingWidth(gameLogic.getCherries().getText().length()*50);
+                    if(gameLogic.getCherries().getText().length()!=String.valueOf(Integer.parseInt(gameLogic.getCherries().getText())-1).length()){
+                        gameLogic.getCherries().setLayoutX(gameLogic.getCherries().getLayoutX()-(gameLogic.getCherries().getWrappingWidth()-40));
+                    }
                     checkGhostPacmanCollision.removeListener(this);
-
                 }
             }
         };
@@ -91,7 +94,7 @@ public class Cherry{
         );
 
         if(removed==0){
-            timelineCherryFadeOut.setDelay(Duration.millis(2700));
+            timelineCherryFadeOut.setDelay(Duration.millis(1500));
         }
         timelineCherryFadeOut.setOnFinished(event -> {
             cherry.setLayoutY(0);

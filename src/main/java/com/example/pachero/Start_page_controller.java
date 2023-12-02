@@ -25,7 +25,6 @@ public class Start_page_controller implements Initializable {
 
     public Text dots;
     static Start_animation startAnimation;
-    @FXML
     public Text heading;
 
     public Text eater;

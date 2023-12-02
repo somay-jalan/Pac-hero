@@ -47,9 +47,9 @@
                      <Font size="80.0" />
                   </font>
                </Text>
-               <Text fx:id="nextpage" fill="RED" layoutX="320.0" layoutY="541.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="pixeboy" text="Click here to play">
+               <Text fx:id="nextpage" fill="RED" layoutX="260.0" layoutY="541.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="pixeboy" text="Click anywhere to continue">
                   <font>
-                     <Font size="60.0" />
+                     <Font size="45.0" />
                   </font>
                </Text>
                <Button fx:id="next_page" layoutY="6.0" mnemonicParsing="false" onAction="#next_button" prefHeight="786.0" prefWidth="1080.0" style="-fx-opacity: 0;" text="10000000000000000000000000000000000000000000000000000000000" textFill="TRANSPARENT" />
