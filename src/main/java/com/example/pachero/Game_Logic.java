@@ -18,14 +18,15 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.stream.Stream;
 
 public class Game_Logic {
     private Pacman pacman;
@@ -77,15 +78,15 @@ public class Game_Logic {
 
     public void getData(){
         try {
-            Path path = Paths.get("/home/somay/IdeaProjects/Pac-hero/src/main/resources/Data/HighScoreData.txt");
+            Path path = Paths.get("src/main/resources/Data/HighScoreData.txt");
             Scanner scanner = new Scanner(path);
             highScore=scanner.nextInt();
             scanner.close();
         }catch (Exception e){
-           highScore=0;
+            highScore=0;
         }
         try {
-            Path path = Paths.get("/home/somay/IdeaProjects/Pac-hero/src/main/resources/Data/CherryCountData.txt");
+            Path path = Paths.get("src/main/resources/Data/CherryCountData.txt");
             Scanner scanner = new Scanner(path);
             int cherryCount=scanner.nextInt();
             cherries.setText(String.valueOf(cherryCount));
@@ -100,7 +101,7 @@ public class Game_Logic {
     public void setData(){
         try {
             if(Integer.parseInt(score.getText())>highScore) {
-                FileWriter myWriter = new FileWriter("/home/somay/IdeaProjects/Pac-hero/src/main/resources/Data/HighScoreData.txt");
+                FileWriter myWriter = new FileWriter("src/main/resources/Data/HighScoreData.txt");
                 myWriter.write(score.getText());
                 myWriter.close();
 //            System.out.println("Successfully wrote to the file.");
@@ -110,7 +111,7 @@ public class Game_Logic {
         }
 
         try {
-            FileWriter myWriter = new FileWriter("/home/somay/IdeaProjects/Pac-hero/src/main/resources/Data/CherryCountData.txt");
+            FileWriter myWriter = new FileWriter("src/main/resources/Data/CherryCountData.txt");
             myWriter.write(cherries.getText());
             myWriter.close();
 //            System.out.println("Successfully wrote to the file.");
@@ -119,7 +120,7 @@ public class Game_Logic {
         }
 
         try {
-            FileWriter myWriter = new FileWriter("/home/somay/IdeaProjects/Pac-hero/src/main/resources/Data/LastScoreData.txt");
+            FileWriter myWriter = new FileWriter("src/main/resources/Data/LastScoreData.txt");
             myWriter.write(score.getText());
             myWriter.close();
 //            System.out.println("Successfully wrote to the file.");
@@ -195,8 +196,8 @@ public class Game_Logic {
     }
 
     private void highScoreAnimation() {
-        ImageView leftStripe=new ImageView(new Image("file:/home/somay/IdeaProjects/Pac-hero/src/main/resources/images/perfect_stripe.jpg"));
-        ImageView rightStripe=new ImageView(new Image("file:/home/somay/IdeaProjects/Pac-hero/src/main/resources/images/perfect_stripe.jpg"));
+        ImageView leftStripe=new ImageView(new Image("file:src/main/resources/images/perfect_stripe.jpg"));
+        ImageView rightStripe=new ImageView(new Image("file:src/main/resources/images/perfect_stripe.jpg"));
         Text highScoreText=new Text("highscore");
         highScoreText.getStyleClass().add("pac-man");
         highScoreText.setFill(Color.YELLOW);

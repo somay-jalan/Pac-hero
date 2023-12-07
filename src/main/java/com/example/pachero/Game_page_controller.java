@@ -67,6 +67,7 @@ public class Game_page_controller implements Initializable {
     public Button SaveButton;
     public Text pause_text;
     public Text play_text;
+    public ImageView gamePageBG;
 
 
     @Override

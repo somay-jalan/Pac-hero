@@ -97,8 +97,8 @@ public class Perfect {
     }
 
     public void perfectAnimation(){
-        ImageView leftStripe=new ImageView(new Image("file:/home/somay/IdeaProjects/Pac-hero/src/main/resources/images/perfect_stripe.jpg"));
-        ImageView rightStripe=new ImageView(new Image("file:/home/somay/IdeaProjects/Pac-hero/src/main/resources/images/perfect_stripe.jpg"));
+        ImageView leftStripe=new ImageView(new Image("file:src/main/resources/images/perfect_stripe.jpg"));
+        ImageView rightStripe=new ImageView(new Image("file:src/main/resources/images/perfect_stripe.jpg"));
         Text perfectText=new Text("perfect");
         Text ghostText=new Text("*But here's a ghost for you*");
         perfectText.getStyleClass().add("pac-man");
@@ -186,7 +186,7 @@ public class Perfect {
     }
 
     public void addGhost(){
-        ImageView ghostImage=new ImageView(new Image("file:/home/somay/IdeaProjects/Pac-hero/src/main/resources/images/ghost.png"));
+        ImageView ghostImage=new ImageView(new Image("file:src/main/resources/images/ghost.png"));
         ghostImage.setId("Ghost");
         ghostImage.setLayoutX(this.getRectangle().getLayoutX()+5);
         ghostImage.setLayoutY(this.getRectangle().getLayoutY()+16);
