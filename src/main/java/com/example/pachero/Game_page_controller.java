@@ -1,9 +1,12 @@
 package com.example.pachero;
 import javafx.animation.*;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 
 import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
@@ -15,8 +18,10 @@ import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -55,6 +60,13 @@ public class Game_page_controller implements Initializable {
     public ImageView score_cup;
     public Text resurrect_text;
     public Button resurrect_button;
+    public AnchorPane gamePauseMenu;
+    public Text highest_pause;
+    public Button Resume;
+    public Text saveText;
+    public Button SaveButton;
+    public Text pause_text;
+    public Text play_text;
 
 
     @Override
@@ -65,15 +77,33 @@ public class Game_page_controller implements Initializable {
         perfect=new Perfect(perfect_rectangle);
         pacman=new Pacman( new Costume(pacman_image));
         pacmanStick=new Pacman_Stick(pacman_stick);
-        gameLogic=new Game_Logic(pacman,cur_platform,next_platform,perfect,pacmanStick,gamePane,score,cherries, gameOverMenu);
+        gameLogic=new Game_Logic(pacman,cur_platform,next_platform,perfect,pacmanStick,gamePane,score,cherries, gameOverMenu,gamePauseMenu,this);
         pacman.setGameLogic(gameLogic);
         pacmanStick.setGameLogic(gameLogic);
+        next_platform.setGameLogic(gameLogic);
+        cur_platform.setGameLogic(gameLogic);
         perfect.setGameLogic(gameLogic);
         perfect.setAnchorPane(gamePane);
-        fadeInTransition();
+        fadeInTransitionNoRules();
     }
 
-    private void fadeInTransition() {
+    private void fadeInTransitionNoRules(){
+        pause_text.setOpacity(1);
+        play_text.setOpacity(1);
+        gameLogic.setStopKeyboard(1);
+        FadeTransition fadeTransitionGamePane = new FadeTransition(Duration.millis(500), gamePane);
+        fadeTransitionGamePane.setFromValue(0);
+        fadeTransitionGamePane.setToValue(1);
+        fadeTransitionGamePane.play();
+        StartGame(new ActionEvent());
+        fadeTransitionGamePane.setOnFinished(event -> {
+            gameLogic.setStopKeyboard(0);
+            gameLogic.setStopKeyboard(0);
+        });
+        gameLogic.pausePlayTextAnimate();
+    }
+
+    private void fadeInTransitionRules() {
         gameLogic.setStopKeyboard(1);
         Text rules=new Text();
         rules.getStyleClass().add("pixeboy");
@@ -144,20 +174,32 @@ public class Game_page_controller implements Initializable {
     }
 
 
-    public void restartGame(ActionEvent event ) {
-        gameOverMenu.setVisible(false);
-        resurrect.setText(String.valueOf(5));
-        resurrect_text.setText("resurrect");
-        pacman_lives_3.setOpacity(1);
-        pacman_lives_2.setOpacity(1);
-        pacman_lives_1.setOpacity(1);
-        gameLogic.restartGame();
+    public void restartGame(ActionEvent event ) throws IOException {
+        gameLogic.setData();
+        Stage stage;
+        Parent root;
+        Scene scene;
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Game_page.fxml")));
+        stage=(Stage)((Node)event.getSource()).getScene().getWindow();
+        scene=new Scene(root);
+        stage.setScene(scene);
+        scene.setOnKeyPressed(Game_page_controller.gameLogic::keyboardControl);
+        scene.setOnKeyReleased(Game_page_controller.gameLogic::keyboardControl);
+        stage.show();
     }
 
     public void resurrectGame(ActionEvent event){
         if(Integer.parseInt(resurrect.getText())==5) {
             if (Integer.parseInt(cherries.getText()) >= 5){
-                gameOverMenu.setVisible(false);
+                Timeline timelineGameOverMenu=new Timeline(
+                        new KeyFrame(Duration.ZERO,new KeyValue(gameOverMenu.opacityProperty(),1)),
+                        new KeyFrame(Duration.millis(300),new KeyValue(gameOverMenu.opacityProperty(),0))
+                );
+                timelineGameOverMenu.play();
+                timelineGameOverMenu.setOnFinished(event1 -> {
+                    gameOverMenu.setVisible(false);
+                    gameLogic.setGamePauseMenuBinary(0);
+                });
                 pacman_lives_1.setOpacity(0);
                 resurrect.setText(String.valueOf(Integer.parseInt(resurrect.getText()) + 5));
                 gameLogic.resurrectGame();
@@ -170,6 +212,14 @@ public class Game_page_controller implements Initializable {
             }
         } else if (Integer.parseInt(resurrect.getText())==10) {
             if (Integer.parseInt(cherries.getText()) >= 10) {
+                Timeline timelineGameOverMenu=new Timeline(
+                        new KeyFrame(Duration.ZERO,new KeyValue(gameOverMenu.opacityProperty(),1)),
+                        new KeyFrame(Duration.millis(300),new KeyValue(gameOverMenu.opacityProperty(),0))
+                );
+                timelineGameOverMenu.setOnFinished(event1 -> {
+                    gameOverMenu.setVisible(false);
+                    gameLogic.setGamePauseMenuBinary(0);
+                });
                 gameOverMenu.setVisible(false);
                 resurrect.setText(String.valueOf(Integer.parseInt(resurrect.getText()) + 5));
                 pacman_lives_2.setOpacity(0);
@@ -183,6 +233,14 @@ public class Game_page_controller implements Initializable {
             }
         }else if (Integer.parseInt(resurrect.getText())==15){
             if (Integer.parseInt(cherries.getText()) >= 15) {
+                Timeline timelineGameOverMenu=new Timeline(
+                        new KeyFrame(Duration.ZERO,new KeyValue(gameOverMenu.opacityProperty(),1)),
+                        new KeyFrame(Duration.millis(300),new KeyValue(gameOverMenu.opacityProperty(),0))
+                );
+                timelineGameOverMenu.setOnFinished(event1 -> {
+                    gameOverMenu.setVisible(false);
+                    gameLogic.setGamePauseMenuBinary(0);
+                });
                 gameOverMenu.setVisible(false);
                 resurrect.setText("-1");
                 pacman_lives_3.setOpacity(0);
@@ -200,8 +258,27 @@ public class Game_page_controller implements Initializable {
             resurrect_button.setCancelButton(true);
         }
 
+    }
 
+    public void resume(ActionEvent event){
+        saveText.setText("SAVE");
+        Timeline timelineGameOverMenu=new Timeline(
+                new KeyFrame(Duration.ZERO,new KeyValue(gamePauseMenu.opacityProperty(),1)),
+                new KeyFrame(Duration.millis(300),new KeyValue(gamePauseMenu.opacityProperty(),0))
+        );
+        timelineGameOverMenu.play();
+        timelineGameOverMenu.setOnFinished(event1 -> {
+            for(Animation i: gameLogic.getAnimationList()){
+                i.play();
+            }
+            gamePauseMenu.setVisible(false);
+            gameLogic.setGamePauseMenuBinary(0);
+        });
+    }
 
+    public void saveData(ActionEvent event){
+        gameLogic.setData();
+        saveText.setText("SAVED!");
     }
 }
 

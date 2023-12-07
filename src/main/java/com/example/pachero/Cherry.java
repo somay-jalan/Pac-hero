@@ -1,7 +1,6 @@
 package com.example.pachero;
 
 
-import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -28,7 +27,7 @@ public class Cherry{
     }
     private int removed=0;
     public void checkIntersectionPacman(ActionEvent event){
-        BooleanBinding checkGhostPacmanCollision= Bindings.createBooleanBinding(
+        BooleanBinding checkCherryPacmanCollision= Bindings.createBooleanBinding(
                 ()->cherry.getBoundsInParent().intersects(gameLogic.getPacman().getPacman().getPacman_costume().getBoundsInParent()),
                 cherry.boundsInParentProperty(),
                 gameLogic.getPacman().getPacman().getPacman_costume().boundsInParentProperty()
@@ -44,11 +43,11 @@ public class Cherry{
                     if(gameLogic.getCherries().getText().length()!=String.valueOf(Integer.parseInt(gameLogic.getCherries().getText())-1).length()){
                         gameLogic.getCherries().setLayoutX(gameLogic.getCherries().getLayoutX()-(gameLogic.getCherries().getWrappingWidth()-40));
                     }
-                    checkGhostPacmanCollision.removeListener(this);
+                    checkCherryPacmanCollision.removeListener(this);
                 }
             }
         };
-        checkGhostPacmanCollision.addListener(collisionListener);
+        checkCherryPacmanCollision.addListener(collisionListener);
     }
     public void addCherry(){
         cherry=new ImageView(new Image("file:/home/somay/IdeaProjects/Pac-hero/src/main/resources/images/cherry.png"));
@@ -77,10 +76,12 @@ public class Cherry{
             }else{
                 timelineCherryFadeIn.setDelay(Duration.millis(1050));
                 timelineCherryFadeIn.setOnFinished(event -> {
+                    gameLogic.getAnimationList().remove(timelineCherryFadeIn);
                     checkIntersectionPacman(event);
                     removeCherry();
                 });
                 timelineCherryFadeIn.play();
+                gameLogic.getAnimationList().add(timelineCherryFadeIn);
             }
 
             gameLogic.getGamePane().getChildren().add(cherry);
@@ -94,16 +95,16 @@ public class Cherry{
         );
 
         if(removed==0){
-            timelineCherryFadeOut.setDelay(Duration.millis(1500));
+            timelineCherryFadeOut.setDelay(Duration.millis(gameLogic.getPacman().getDuration()*9/10));
         }
         timelineCherryFadeOut.setOnFinished(event -> {
             cherry.setLayoutY(0);
             cherry.setLayoutX(0);
-        });
-        timelineCherryFadeOut.setOnFinished(event -> {
             cherry.setVisible(false);
+            gameLogic.getAnimationList().remove(timelineCherryFadeOut);
         });
         timelineCherryFadeOut.play();
+        gameLogic.getAnimationList().add(timelineCherryFadeOut);
 
     }
 

@@ -23,12 +23,16 @@ public class Pacman_Stick {
         this.line=line;
     }
     public void IncreaseLength(){
-        Timeline timeline=new Timeline(
+        Timeline timelineIncreaseLength=new Timeline(
                 new KeyFrame(Duration.ZERO,new KeyValue(line.endYProperty(),line.getEndY())),
                 new KeyFrame(Duration.millis( 62.5),new KeyValue(line.endYProperty(),line.getEndY()-8))
         );
-        timeline.setCycleCount(1);
-        timeline.play();
+        timelineIncreaseLength.setOnFinished(event -> {
+            gameLogic.getAnimationList().remove(timelineIncreaseLength);
+        });
+        timelineIncreaseLength.setCycleCount(1);
+        timelineIncreaseLength.play();
+        gameLogic.getAnimationList().add(timelineIncreaseLength);
     }
 
     public void StopIncreaseLength(){
@@ -38,13 +42,17 @@ public class Pacman_Stick {
         rotation.pivotXProperty().bind(line.startXProperty());
         rotation.pivotXProperty().bind(line.startYProperty());
         line.getTransforms().add(rotation);
-        Timeline timeline=new Timeline(
+        Timeline timelineStopIncreaseLength=new Timeline(
                 new KeyFrame(Duration.ZERO,new KeyValue(line.layoutYProperty(),line.getLayoutY()),new KeyValue(line.layoutXProperty(),line.getLayoutX()),new KeyValue(rotation.angleProperty(),line.getRotate())),
                 new KeyFrame(Duration.millis(750),new KeyValue(line.layoutYProperty(),line.getLayoutY()+25),new KeyValue(line.layoutXProperty(),line.getLayoutX()+25),new KeyValue(rotation.angleProperty(),90))
         );
-        timeline.setCycleCount(1);
-        timeline.play();
-        timeline.setOnFinished(this::Drop);
+        timelineStopIncreaseLength.setCycleCount(1);
+        timelineStopIncreaseLength.play();
+        gameLogic.getAnimationList().add(timelineStopIncreaseLength);
+        timelineStopIncreaseLength.setOnFinished(event->{
+            this.Drop(event);
+            gameLogic.getAnimationList().remove(timelineStopIncreaseLength);
+        });
 
     }
 
@@ -54,18 +62,24 @@ public class Pacman_Stick {
 //                new KeyFrame(Duration.millis(20),new KeyValue(line.layoutXProperty(),startLayoutX),new KeyValue(line.layoutYProperty(),startLayoutY),new KeyValue(line.endYProperty(),0))
 //        );
 //        timeline.play();
+
         Rotate rotation=new Rotate();
         line.setLayoutX(startLayoutX-25);
         line.setLayoutY(startLayoutY);
         rotation.pivotXProperty().bind(line.startXProperty());
         rotation.pivotXProperty().bind(line.startYProperty());
         line.getTransforms().add(rotation);
-        Timeline timeline=new Timeline(
+        Timeline timelineGoToStart=new Timeline(
                 new KeyFrame(Duration.ZERO,new KeyValue(rotation.angleProperty(),line.getRotate())),
-                new KeyFrame(Duration.millis(100),new KeyValue(line.layoutXProperty(),line.getLayoutX()+25),new KeyValue(rotation.angleProperty(),-90))
+                new KeyFrame(Duration.millis(100),new KeyValue(rotation.angleProperty(),-90))
         );
-        timeline.setCycleCount(1);
-        timeline.play();
+        timelineGoToStart.setCycleCount(1);
+        timelineGoToStart.setOnFinished(event -> {
+            line.setLayoutX(line.getLayoutX()+25);
+            gameLogic.getAnimationList().remove(timelineGoToStart);
+        });
+        timelineGoToStart.play();
+        gameLogic.getAnimationList().add(timelineGoToStart);
         line.toFront();
         line.setEndY(0);
     }
@@ -73,13 +87,14 @@ public class Pacman_Stick {
 //        System.out.println(line.getRotate());
 //        System.out.println(line.rotateProperty());
 //        System.out.println(line.rotationAxisProperty());
-        Timeline timeline=new Timeline(
+        Timeline timelineDrop=new Timeline(
                 new KeyFrame(Duration.ZERO,new KeyValue(line.layoutYProperty(),line.getLayoutY())),
                 new KeyFrame(Duration.millis(300),new KeyValue(line.layoutYProperty(),line.getLayoutY()+24))
         );
-        timeline.setCycleCount(1);
-        timeline.setDelay(Duration.millis(0));
-        timeline.setOnFinished(event1 -> {
+        timelineDrop.setCycleCount(1);
+        timelineDrop.setDelay(Duration.millis(0));
+        timelineDrop.setOnFinished(event1 -> {
+            gameLogic.getAnimationList().remove(timelineDrop);
 //            System.out.println(line.getLayoutX());
 //            System.out.println(line.getEndY());
 //            System.out.println(gameLogic.getPerfect().getRectangle().getLayoutX());
@@ -87,8 +102,8 @@ public class Pacman_Stick {
                 gameLogic.getPerfect().perfectAnimation();
             }
         });
-
-        timeline.play();
+        timelineDrop.play();
+        gameLogic.getAnimationList().add(timelineDrop);
     }
 
     public void printStats(ActionEvent event){

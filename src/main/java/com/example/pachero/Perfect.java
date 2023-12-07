@@ -28,51 +28,68 @@ public class Perfect {
     }
 
     public void relocate(double v1) {
-        Timeline timeline=new Timeline(
+
+        Timeline timelineRelocate=new Timeline(
                 new KeyFrame(Duration.ZERO,new KeyValue(rectangle.layoutXProperty(),rectangle.getLayoutY())),
                 new KeyFrame(Duration.millis(10),new KeyValue(rectangle.layoutXProperty(),v1))
         );
-        timeline.setDelay(Duration.millis(500));
+        timelineRelocate.setDelay(Duration.millis(500));
         rectangle.toFront();
-        timeline.play();
+        timelineRelocate.setOnFinished(event -> {
+            gameLogic.getAnimationList().remove(timelineRelocate);
+        });
+        timelineRelocate.play();
+        gameLogic.getAnimationList().add(timelineRelocate);
     }
 
     public void animationFadeIn(){
-
-        FadeTransition fadeTransition = new FadeTransition(Duration.millis(1000), rectangle);
-        fadeTransition.setFromValue(0);
-        fadeTransition.setToValue(1);
-        fadeTransition.setDelay(Duration.millis(500));
-        fadeTransition.play();
-
-        fadeTransition.setOnFinished(event -> {
+        FadeTransition fadeInTransition = new FadeTransition(Duration.millis(1000), rectangle);
+        fadeInTransition.setFromValue(0);
+        fadeInTransition.setToValue(0.5);
+        fadeInTransition.setDelay(Duration.millis(500));
+        fadeInTransition.play();
+        gameLogic.getAnimationList().add(fadeInTransition);
+        fadeInTransition.setOnFinished(event -> {
+            FlameAnimation();
+            gameLogic.getAnimationList().remove(fadeInTransition);
 //            System.out.println("PERFECT");
 //            System.out.println(rectangle.getLayoutX());
 //            System.out.println(rectangle.getLayoutY());
         });
-        FlameAnimation();
+
     }
     private Timeline timelineFlame;
     private void FlameAnimation() {
+        Timeline timelineOnceFLame=new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(rectangle.opacityProperty(), rectangle.getOpacity())),
+                new KeyFrame(Duration.millis(1000), new KeyValue(rectangle.opacityProperty(), 0.5))
+        );
+        timelineOnceFLame.play();
         timelineFlame= new Timeline(
-
                 new KeyFrame(Duration.ZERO, new KeyValue(rectangle.opacityProperty(), 0.5)),
                 new KeyFrame(Duration.millis(1000), new KeyValue(rectangle.opacityProperty(), 1))
         );
-
         timelineFlame.setCycleCount(Animation.INDEFINITE);
         timelineFlame.setAutoReverse(true);
-        timelineFlame.setDelay(Duration.millis(2300));
+        timelineFlame.setOnFinished(event -> {
+//            gameLogic.getAnimationList().remove(timelineFlame);
+        });
         timelineFlame.play();
+//        gameLogic.getAnimationList().add(timelineFlame);
     }
     public void animationFadeOut(){
-        timelineFlame.pause();
+        timelineFlame.stop();
         Timeline timelineFadeOut=new Timeline(
                 new KeyFrame(Duration.ZERO,new KeyValue(rectangle.opacityProperty(),rectangle.getOpacity())),
                 new KeyFrame(Duration.millis(50),new KeyValue(rectangle.opacityProperty(),0))
         );
 //        timelineFadeOut.setDelay(Duration.millis(50));
+        timelineFadeOut.setOnFinished(event -> {
+//            rectangle.setVisible(false);
+            gameLogic.getAnimationList().remove(timelineFadeOut);
+        });
         timelineFadeOut.play();
+        gameLogic.getAnimationList().add(timelineFadeOut);
     }
 
     public Rectangle getRectangle() {
@@ -122,21 +139,33 @@ public class Perfect {
                 new KeyFrame(Duration.millis(1500),new KeyValue(leftStripe.layoutXProperty(),0,Interpolator.EASE_IN),new KeyValue(leftStripe.opacityProperty(),1)),
                 new KeyFrame(Duration.millis(1800),new KeyValue(leftStripe.layoutXProperty(),-434,Interpolator.EASE_IN),new KeyValue(leftStripe.opacityProperty(),1))
         );
+        timelineLeftStripe.setOnFinished(event -> {
+            gameLogic.getAnimationList().remove(timelineLeftStripe);
+        });
         timelineLeftStripe.play();
+        gameLogic.getAnimationList().add(timelineLeftStripe);
         Timeline timelineRightStripe=new Timeline(
                 new KeyFrame(Duration.ZERO,new KeyValue(rightStripe.layoutXProperty(),1080,Interpolator.EASE_IN),new KeyValue(rightStripe.opacityProperty(),1)),
                 new KeyFrame(Duration.millis(500),new KeyValue(rightStripe.layoutXProperty(),690,Interpolator.EASE_IN),new KeyValue(rightStripe.opacityProperty(),1)),
                 new KeyFrame(Duration.millis(1500),new KeyValue(rightStripe.layoutXProperty(),690,Interpolator.EASE_IN),new KeyValue(rightStripe.opacityProperty(),1)),
                 new KeyFrame(Duration.millis(1800),new KeyValue(rightStripe.layoutXProperty(),1080,Interpolator.EASE_IN),new KeyValue(rightStripe.opacityProperty(),1) )
         );
+        timelineRightStripe.setOnFinished(event -> {
+            gameLogic.getAnimationList().remove(timelineRightStripe);
+        });
         timelineRightStripe.play();
+        gameLogic.getAnimationList().add(timelineRightStripe);
         Timeline timelineText=new Timeline(
                 new KeyFrame(Duration.ZERO, new KeyValue(perfectText.opacityProperty(),0,Interpolator.DISCRETE),new KeyValue(ghostText.opacityProperty(),0,Interpolator.DISCRETE)),
                 new KeyFrame(Duration.millis(300),new KeyValue(perfectText.opacityProperty(),1,Interpolator.DISCRETE),new KeyValue(ghostText.opacityProperty(),1,Interpolator.DISCRETE)),
                 new KeyFrame(Duration.millis(1500),new KeyValue(perfectText.opacityProperty(),1,Interpolator.DISCRETE),new KeyValue(ghostText.opacityProperty(),1,Interpolator.DISCRETE)),
                 new KeyFrame(Duration.millis(1800),new KeyValue(perfectText.opacityProperty(),0,Interpolator.DISCRETE),new KeyValue(ghostText.opacityProperty(),0,Interpolator.DISCRETE))
         );
+        timelineText.setOnFinished(event -> {
+            gameLogic.getAnimationList().remove(timelineText);
+        });
         timelineText.play();
+        gameLogic.getAnimationList().add(timelineText);
         gamePane.getChildren().addAll(leftStripe,rightStripe,perfectText,ghostText);
         gameLogic.getScore().setText(String.valueOf(Integer.parseInt(gameLogic.getScore().getText())+1));
         gameLogic.getScore().setWrappingWidth(gameLogic.getScore().getText().length()*55);
@@ -172,15 +201,21 @@ public class Perfect {
         );
 //        timelineIncreaseWidth.setOnFinished(ghost::animateFadeIn);
         timelineIncreaseWidth.setOnFinished(event -> {
+            gameLogic.getAnimationList().remove(timelineIncreaseWidth);
             ghost.animateFadeIn(event);
             Timeline timelineDecreaseWidth=new Timeline(
                     new KeyFrame(Duration.ZERO,new KeyValue(rectangle.layoutXProperty(),rectangle.getLayoutX()),new KeyValue(rectangle.widthProperty(),rectangle.getWidth())),
                     new KeyFrame(Duration.millis(300),new KeyValue(rectangle.layoutXProperty(),rectangle.getLayoutX()+(rectangle.getWidth()-15)/2),new KeyValue(rectangle.widthProperty(),15))
             );
+            timelineDecreaseWidth.setOnFinished(event1 -> {
+                gameLogic.getAnimationList().remove(timelineDecreaseWidth);
+            });
             timelineDecreaseWidth.setDelay(Duration.millis(100));
             timelineDecreaseWidth.play();
+            gameLogic.getAnimationList().add(timelineDecreaseWidth);
         });
         timelineIncreaseWidth.play();
+        gameLogic.getAnimationList().add(timelineIncreaseWidth);
 
 
 

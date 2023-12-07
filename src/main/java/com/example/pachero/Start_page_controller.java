@@ -52,14 +52,14 @@ public class Start_page_controller implements Initializable {
         fadeTransition.setToValue(0);
         fadeTransition.setOnFinished(event1 -> {
             try {
-                loadnextscreen(event);
+                loadGamePage(event);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         });
         fadeTransition.play();
     }
-    private void loadnextscreen(ActionEvent event) throws IOException {
+    private void loadGamePage(ActionEvent event) throws IOException {
         Stage stage;
         Parent root;
         Scene scene;
@@ -71,9 +71,4 @@ public class Start_page_controller implements Initializable {
         scene.setOnKeyReleased(Game_page_controller.gameLogic::keyboardControl);
         stage.show();
     }
-
-
-
-
-
 }

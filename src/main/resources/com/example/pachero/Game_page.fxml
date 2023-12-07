@@ -143,6 +143,16 @@
                      <Image url="@../../../images/pacman_lives.png" />
                   </image>
                </ImageView>
+               <Text fx:id="pause_text" fill="RED" layoutX="468.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-opacity: 0;" styleClass="pixeboy" text="*PRESS ESC TO PAUSE*" textAlignment="CENTER" wrappingWidth="228.9722900390625">
+                  <font>
+                     <Font size="20.0" />
+                  </font>
+               </Text>
+               <Text fx:id="play_text" fill="RED" layoutX="400.0" layoutY="562.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-opacity: 0;" styleClass="pixeboy" text="*PRESS SPACE TO PLAY*" textAlignment="CENTER" wrappingWidth="316.9722900390625">
+                  <font>
+                     <Font size="20.0" />
+                  </font>
+               </Text>
                <AnchorPane fx:id="gameOverMenu" prefHeight="567.0" prefWidth="1080.0" visible="false">
                   <children>
                      <ImageView fitHeight="578.0" fitWidth="767.0" layoutX="189.0" opacity="0.8" pickOnBounds="true" preserveRatio="true" scaleX="1.5" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -198,7 +208,7 @@
                            <Font size="40.0" />
                         </font>
                      </Text>
-                     <Text fx:id="highest" fill="WHITE" layoutX="625.0" layoutY="268.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="pixeboy" text="0" textAlignment="CENTER" wrappingWidth="18.799987792968636">
+                     <Text fx:id="highest" fill="WHITE" layoutX="625.0" layoutY="268.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="pixeboy" text="0" textAlignment="CENTER">
                         <font>
                            <Font size="40.0" />
                         </font>
@@ -242,6 +252,112 @@
                         </font>
                      </Text>
                      <Button layoutX="502.0" layoutY="334.0" mnemonicParsing="false" onAction="#restartGame" prefHeight="33.0" prefWidth="150.0" style="-fx-opacity: 0;" text="Button" />
+                  </children>
+               </AnchorPane>
+               <AnchorPane fx:id="gamePauseMenu" prefHeight="567.0" prefWidth="1080.0" visible="false">
+                  <children>
+                     <ImageView fitHeight="578.0" fitWidth="767.0" layoutX="189.0" opacity="0.8" pickOnBounds="true" preserveRatio="true" scaleX="1.5" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <image>
+                           <Image url="@../../../images/A_black_image.jpg" />
+                        </image>
+                     </ImageView>
+                     <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="582.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@../../../images/score_image.png" />
+                        </image>
+                     </ImageView>
+                     <ImageView fitHeight="102.0" fitWidth="109.0" layoutX="945.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@../../../images/cherry.png" />
+                        </image>
+                     </ImageView>
+                     <Rectangle arcHeight="15.0" arcWidth="15.0" height="261.0" layoutX="452.0" layoutY="207.0" stroke="BLACK" strokeType="INSIDE" width="252.0">
+                        <fill>
+                           <LinearGradient endX="0.5399239761294521" endY="1.0" startX="0.524714854280305" startY="0.2661596958174905">
+                              <stops>
+                                 <Stop>
+                                    <color>
+                                       <Color red="0.2549019753932953" blue="0.45098039507865906" />
+                                    </color>
+                                 </Stop>
+                                 <Stop offset="0.23687752355316288">
+                                    <color>
+                                       <Color red="0.2549019753932953" blue="0.45098039507865906" />
+                                    </color>
+                                 </Stop>
+                                 <Stop offset="0.5536585365853658">
+                                    <color>
+                                       <Color red="0.4000000059604645" blue="0.3137255012989044" />
+                                    </color>
+                                 </Stop>
+                                 <Stop offset="1.0">
+                                    <color>
+                                       <Color red="0.5686274766921997" />
+                                    </color>
+                                 </Stop>
+                              </stops>
+                           </LinearGradient>
+                        </fill>
+                     </Rectangle>
+                     <Text fill="YELLOW" layoutX="483.0" layoutY="191.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="pac-man" text="Pause" textAlignment="RIGHT">
+                        <font>
+                           <Font size="50.0" />
+                        </font>
+                     </Text>
+                     <Text fill="WHITE" layoutX="472.0" layoutY="267.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="pixeboy" text="HIghest " textAlignment="CENTER" wrappingWidth="141.0">
+                        <font>
+                           <Font size="40.0" />
+                        </font>
+                     </Text>
+                     <Text fx:id="highest_pause" fill="WHITE" layoutX="625.0" layoutY="268.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="pixeboy" text="0" textAlignment="CENTER">
+                        <font>
+                           <Font size="40.0" />
+                        </font>
+                     </Text>
+                     <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="651.0" layoutY="241.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@../../../images/score_image.png" />
+                        </image>
+                     </ImageView>
+                     <Group layoutX="498.0" layoutY="280.0">
+                        <children>
+                           <Rectangle arcHeight="40.0" arcWidth="40.0" height="33.0" stroke="BLACK" strokeType="INSIDE" width="160.0" />
+                           <Text fill="WHITE" layoutX="10.0" layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="pixeboy" text="RESUME" textAlignment="CENTER" wrappingWidth="141.0">
+                              <font>
+                                 <Font size="24.0" />
+                              </font>
+                           </Text>
+                           <Button fx:id="Resume" mnemonicParsing="false" onAction="#resume" prefHeight="35.0" prefWidth="160.0" style="-fx-opacity: 0;" text="Button" />
+                        </children>
+                     </Group>
+                     <Group layoutX="498.0" layoutY="378.0">
+                        <children>
+                           <Rectangle arcHeight="40.0" arcWidth="40.0" height="33.0" stroke="BLACK" strokeType="INSIDE" width="160.0" />
+                           <Text fill="WHITE" layoutX="10.0" layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="pixeboy" text="START OVER" textAlignment="CENTER" wrappingWidth="141.0">
+                              <font>
+                                 <Font size="24.0" />
+                              </font>
+                           </Text>
+                           <Button layoutX="3.0" mnemonicParsing="false" onAction="#restartGame" prefHeight="33.0" prefWidth="150.0" style="-fx-opacity: 0;" text="Button" />
+                        </children>
+                     </Group>
+                     <Rectangle arcHeight="40.0" arcWidth="40.0" height="33.0" layoutX="498.0" layoutY="423.0" stroke="BLACK" strokeType="INSIDE" width="160.0" />
+                     <Text fill="WHITE" layoutX="507.0" layoutY="444.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="pixeboy" text="EXIT GAME" textAlignment="CENTER" wrappingWidth="141.0">
+                        <font>
+                           <Font size="24.0" />
+                        </font>
+                     </Text>
+                     <Group layoutX="498.0" layoutY="329.0">
+                        <children>
+                           <Rectangle arcHeight="40.0" arcWidth="40.0" height="33.0" stroke="BLACK" strokeType="INSIDE" width="160.0" />
+                           <Text fx:id="saveText" fill="WHITE" layoutX="10.0" layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="pixeboy" text="SAVE" textAlignment="CENTER" wrappingWidth="141.0">
+                              <font>
+                                 <Font size="24.0" />
+                              </font>
+                           </Text>
+                           <Button fx:id="SaveButton" mnemonicParsing="false" onAction="#saveData" prefHeight="35.0" prefWidth="160.0" style="-fx-opacity: 0;" text="Button" />
+                        </children>
+                     </Group>
                   </children>
                </AnchorPane>
             </children>

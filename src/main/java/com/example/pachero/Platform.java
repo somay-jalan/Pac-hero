@@ -14,17 +14,21 @@ public class Platform {
     
 
     private Rectangle rectangle;
+    private Game_Logic gameLogic;
     public Platform(Rectangle rectangle){
+
         this.rectangle=rectangle;
     }
 
     public void animateRectangleFadeIn(){
-        FadeTransition fadeTransition = new FadeTransition(Duration.millis(1000), rectangle);
-        fadeTransition.setFromValue(0);
-        fadeTransition.setToValue(1);
-        fadeTransition.setDelay(Duration.millis(500));
-        fadeTransition.play();
-        fadeTransition.setOnFinished(event -> {
+        FadeTransition fadeInTransition = new FadeTransition(Duration.millis(1000), rectangle);
+        fadeInTransition.setFromValue(0);
+        fadeInTransition.setToValue(1);
+        fadeInTransition.setDelay(Duration.millis(500));
+        fadeInTransition.play();
+        gameLogic.getAnimationList().add(fadeInTransition);
+        fadeInTransition.setOnFinished(event -> {
+            gameLogic.getAnimationList().remove(fadeInTransition);
 //            System.out.println("PLATFORM");
 //            System.out.println(rectangle.getLayoutX());
 //            System.out.println(rectangle.getLayoutY());
@@ -33,11 +37,15 @@ public class Platform {
     }
 
     public void relocate(double v) {
-        Timeline timeline=new Timeline(
+        Timeline timelineRelocate=new Timeline(
                 new KeyFrame(Duration.ZERO,new KeyValue(rectangle.layoutXProperty(),rectangle.getLayoutX())),
                 new KeyFrame(Duration.millis(350),new KeyValue(rectangle.layoutXProperty(),v))
         );
-        timeline.play();
+        timelineRelocate.setOnFinished(event -> {
+            gameLogic.getAnimationList().remove(timelineRelocate);
+        });
+        timelineRelocate.play();
+        gameLogic.getAnimationList().add(timelineRelocate);
 //        timeline.setOnFinished(event -> {
 //            System.out.println(rectangle.getLayoutX());
 //            System.out.println(rectangle.getLayoutY());
@@ -45,10 +53,14 @@ public class Platform {
     }
 
     public void animateRectangleFadeout(){
-        FadeTransition fadeTransition = new FadeTransition(Duration.millis(100), rectangle);
-        fadeTransition.setFromValue(1);
-        fadeTransition.setToValue(0);
-        fadeTransition.play();
+        FadeTransition fadeOutTransition = new FadeTransition(Duration.millis(100), rectangle);
+        fadeOutTransition.setFromValue(1);
+        fadeOutTransition.setToValue(0);
+        fadeOutTransition.setOnFinished(event -> {
+            gameLogic.getAnimationList().remove(fadeOutTransition);
+        });
+        fadeOutTransition.play();
+        gameLogic.getAnimationList().add(fadeOutTransition);
     }
 
     public Rectangle getRectangle() {
@@ -70,5 +82,9 @@ public class Platform {
         newRect.setArcWidth(this.rectangle.getArcWidth());
         newRect.setOpacity(0);
         return newRect;
+    }
+
+    public void setGameLogic(Game_Logic gameLogic) {
+        this.gameLogic = gameLogic;
     }
 }

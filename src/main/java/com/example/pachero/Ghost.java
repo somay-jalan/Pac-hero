@@ -26,11 +26,15 @@ public class Ghost{
     public void relocate(ActionEvent event){
         Timeline timelineGhostRelocate=new Timeline(
                 new KeyFrame(Duration.ZERO,new KeyValue(ghost.layoutXProperty(),ghost.getLayoutX())),
-                new KeyFrame(Duration.millis(2000),new KeyValue(ghost.layoutXProperty(),gameLogic.getCur_platform().getRectangle().getLayoutX()))
+                new KeyFrame(Duration.millis(gameLogic.getPacman().getDuration()),new KeyValue(ghost.layoutXProperty(),gameLogic.getCur_platform().getRectangle().getLayoutX()))
         );
 
-        timelineGhostRelocate.setOnFinished(this::animateFadeOut);
+        timelineGhostRelocate.setOnFinished(event1 -> {
+            animateFadeOut(event1);
+            gameLogic.getAnimationList().remove(timelineGhostRelocate);
+        });
         timelineGhostRelocate.play();
+        gameLogic.getAnimationList().add(timelineGhostRelocate);
         BooleanBinding checkGhostPacmanCollision= Bindings.createBooleanBinding(
                 ()->ghost.getBoundsInParent().intersects(gameLogic.getPacman().getPacman().getPacman_costume().getBoundsInParent()),
                 ghost.boundsInParentProperty(),
@@ -83,26 +87,34 @@ public class Ghost{
                 new KeyFrame(Duration.ZERO,new KeyValue(ghost.opacityProperty(),0)),
                 new KeyFrame(Duration.millis(20),new KeyValue(ghost.opacityProperty(),1))
         );
-        timelineFadeIn.setOnFinished(this::relocate);
+        timelineFadeIn.setOnFinished(event1 -> {
+            relocate(event1);
+            gameLogic.getAnimationList().remove(timelineFadeIn);
+        });
         timelineFadeIn.play();
+        gameLogic.getAnimationList().add(timelineFadeIn);
     }
 
     public void animateFadeOut(ActionEvent event){
-
         Timeline timelineFadeOut=new Timeline(
                 new KeyFrame(Duration.ZERO,new KeyValue(ghost.opacityProperty(),1)),
                 new KeyFrame(Duration.millis(20),new KeyValue(ghost.opacityProperty(),0))
         );
         timelineFadeOut.setOnFinished(eventNew ->{
+            gameLogic.getAnimationList().remove(timelineFadeOut);
             Timeline timelineGoToZero=new Timeline(
                     new KeyFrame(Duration.ZERO,new KeyValue(ghost.layoutXProperty(),ghost.getLayoutX())),
                     new KeyFrame(Duration.millis(1),new KeyValue(ghost.layoutXProperty(),0))
             );
-            timelineGoToZero.setOnFinished(gameLogic.getPerfect()::removeGhost);
+            timelineGoToZero.setOnFinished(event1->{
+                gameLogic.getPerfect().removeGhost(event1);
+                gameLogic.getAnimationList().remove(timelineGoToZero);
+            });
             timelineGoToZero.play();
-
+            gameLogic.getAnimationList().add(timelineGoToZero);
         });
         timelineFadeOut.play();
+        gameLogic.getAnimationList().add(timelineFadeOut);
 
     }
 

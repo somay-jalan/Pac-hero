@@ -1,10 +1,10 @@
 package com.example.pachero;
 
-import javafx.animation.Interpolator;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
+import javafx.animation.*;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -15,12 +15,15 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -41,9 +44,13 @@ public class Game_Logic {
     private int highScoreAnimation=0;
 
     private AnchorPane gameOverMenu;
+    private AnchorPane gamePauseMenu;
 
+    private ArrayList<Animation> animationList;
 
-    public Game_Logic(Pacman pacman, Platform cur_platform, Platform next_platform, Perfect perfect, Pacman_Stick pacmanStick, AnchorPane gamePane, Text score,Text cherries,AnchorPane gameOverMenu) {
+    private Game_page_controller gamePageController;
+
+    public Game_Logic(Pacman pacman, Platform cur_platform, Platform next_platform, Perfect perfect, Pacman_Stick pacmanStick, AnchorPane gamePane, Text score,Text cherries,AnchorPane gameOverMenu,AnchorPane gamePauseMenu,Game_page_controller gamePageController) {
         this.gamePane=gamePane;
         this.pacman = pacman;
         this.cur_platform = cur_platform;
@@ -53,6 +60,10 @@ public class Game_Logic {
         this.score=score;
         this.cherries=cherries;
         this.gameOverMenu =gameOverMenu;
+        this.gamePauseMenu=gamePauseMenu;
+        this.gamePageController=gamePageController;
+        this.gamePageController=gamePageController;
+        animationList=new ArrayList<>();
     }
 
     public void GameStop(){
@@ -106,6 +117,15 @@ public class Game_Logic {
         } catch (IOException e) {
             System.out.println("An error occurred.");
         }
+
+        try {
+            FileWriter myWriter = new FileWriter("/home/somay/IdeaProjects/Pac-hero/src/main/resources/Data/LastScoreData.txt");
+            myWriter.write(score.getText());
+            myWriter.close();
+//            System.out.println("Successfully wrote to the file.");
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+        }
     }
 
     public void GameStart() {
@@ -118,11 +138,30 @@ public class Game_Logic {
         next_platform.animateRectangleFadeIn();
         perfect.animationFadeIn();
         pacman.animationFadeIn();
+        pacman.getPacman().getPacman_costume().toFront();
         setStopKeyboard(0);
     }
 
+    public void pausePlayTextAnimate(){
+        Timeline timelinePauseTextAnimation=new Timeline(
+          new KeyFrame(Duration.ZERO,new KeyValue(gamePageController.pause_text.opacityProperty(),gamePageController.pause_text.getOpacity())),
+          new KeyFrame(Duration.millis(3000),new KeyValue(gamePageController.pause_text.opacityProperty(),0.5))
+        );
+        timelinePauseTextAnimation.setCycleCount(Animation.INDEFINITE);
+        timelinePauseTextAnimation.setAutoReverse(true);
+        timelinePauseTextAnimation.play();
+        Timeline timelinePlayTextAnimation=new Timeline(
+                new KeyFrame(Duration.ZERO,new KeyValue(gamePageController.play_text.opacityProperty(),gamePageController.play_text.getOpacity())),
+                new KeyFrame(Duration.millis(3000),new KeyValue(gamePageController.play_text.opacityProperty(),0.5))
+        );
+        timelinePlayTextAnimation.setCycleCount(Animation.INDEFINITE);
+        timelinePlayTextAnimation.setAutoReverse(true);
+        timelinePlayTextAnimation.play();
+    }
+
+
     public void pacmanPositionCheck(ActionEvent event){
-        if(next_platform.getRectangle().getLayoutX()<=pacman.getPacman().getPacman_costume().getLayoutX() && pacman.getPacman().getPacman_costume().getLayoutX()<=next_platform.getRectangle().getBoundsInParent().getMaxX() && pacman.getPacman().getPacman_costume().getLayoutY()==pacman.getStartLayoutY()){
+        if(/*next_platform.getRectangle().getLayoutX()<=pacman.getPacman().getPacman_costume().getLayoutX() &&*/ next_platform.getRectangle().getLayoutX()<=pacman.getPacman().getPacman_costume().getBoundsInParent().getMaxX() && pacman.getPacman().getPacman_costume().getLayoutX()<=next_platform.getRectangle().getBoundsInParent().getMaxX() && pacman.getPacman().getPacman_costume().getLayoutY()==pacman.getStartLayoutY()){
             pacman.goToStart();
             perfect.animationFadeOut();
             pacmanStick.goToStart();
@@ -146,6 +185,7 @@ public class Game_Logic {
                 highScoreAnimation();
                 highScore=Integer.parseInt(score.getText());
             }
+            pacman.getPacman().getPacman_costume().toFront();
 //            rotated=0;
 //            key_pressed=0;
 
@@ -182,21 +222,33 @@ public class Game_Logic {
                 new KeyFrame(Duration.millis(1500),new KeyValue(leftStripe.layoutXProperty(),-15,Interpolator.EASE_IN),new KeyValue(leftStripe.opacityProperty(),1)),
                 new KeyFrame(Duration.millis(1800),new KeyValue(leftStripe.layoutXProperty(),-434,Interpolator.EASE_IN),new KeyValue(leftStripe.opacityProperty(),1))
         );
+        timelineLeftStripe.setOnFinished(event -> {
+            getAnimationList().remove(timelineLeftStripe);
+        });
         timelineLeftStripe.play();
+        getAnimationList().add(timelineLeftStripe);
         Timeline timelineRightStripe=new Timeline(
                 new KeyFrame(Duration.ZERO,new KeyValue(rightStripe.layoutXProperty(),1080,Interpolator.EASE_IN),new KeyValue(rightStripe.opacityProperty(),1)),
                 new KeyFrame(Duration.millis(500),new KeyValue(rightStripe.layoutXProperty(),755,Interpolator.EASE_IN),new KeyValue(rightStripe.opacityProperty(),1)),
                 new KeyFrame(Duration.millis(1500),new KeyValue(rightStripe.layoutXProperty(),755,Interpolator.EASE_IN),new KeyValue(rightStripe.opacityProperty(),1)),
                 new KeyFrame(Duration.millis(1800),new KeyValue(rightStripe.layoutXProperty(),1080,Interpolator.EASE_IN),new KeyValue(rightStripe.opacityProperty(),1) )
         );
+        timelineRightStripe.setOnFinished(event -> {
+            getAnimationList().remove(timelineRightStripe);
+        });
         timelineRightStripe.play();
+        getAnimationList().add(timelineRightStripe);
         Timeline timelineText=new Timeline(
                 new KeyFrame(Duration.ZERO, new KeyValue(highScoreText.opacityProperty(),0,Interpolator.DISCRETE)),
                 new KeyFrame(Duration.millis(300),new KeyValue(highScoreText.opacityProperty(),1,Interpolator.DISCRETE)),
                 new KeyFrame(Duration.millis(1500),new KeyValue(highScoreText.opacityProperty(),1,Interpolator.DISCRETE)),
                 new KeyFrame(Duration.millis(1800),new KeyValue(highScoreText.opacityProperty(),0,Interpolator.DISCRETE))
         );
+        timelineText.setOnFinished(event -> {
+            getAnimationList().remove(timelineText);
+        });
         timelineText.play();
+        getAnimationList().add(timelineText);
         gamePane.getChildren().addAll(leftStripe,rightStripe,highScoreText);
         rightStripe.setOpacity(0);
         leftStripe.setOpacity(0);
@@ -205,6 +257,9 @@ public class Game_Logic {
 
     public void gameEndMenu(){
         gameOverMenu.toFront();
+        getData();
+        gamePageController.highest.setText(String.valueOf(highScore));
+        gamePageController.highest.setLayoutX(651-gamePageController.highest.getBoundsInParent().getWidth());
         score.toFront();
         cherries.toFront();
 //        System.out.println(gamePane.getChildren());
@@ -214,18 +269,38 @@ public class Game_Logic {
                 new KeyFrame(Duration.ZERO,new KeyValue(gameOverMenu.opacityProperty(),0)),
                 new KeyFrame(Duration.millis(300),new KeyValue(gameOverMenu.opacityProperty(),1))
         );
+        timelineGameOverMenuFade.setOnFinished(event -> {
+            getAnimationList().remove(timelineGameOverMenuFade);
+        });
         timelineGameOverMenuFade.play();
+        getAnimationList().add(timelineGameOverMenuFade);
     }
-
-    public void restartGame(){
-        pacman.restart();
-        pacmanStick.goToStart();
-
-        setStopKeyboard(0);
-        resetKeyboard(new ActionEvent());
+    public void gamePauseMenu(){
+        for(Animation i:animationList){
+            i.pause();
+        }
+        gamePauseMenu.toFront();
         getData();
-        score.setText(String.valueOf(0));
+        gamePageController.highest_pause.setText(String.valueOf(highScore));
+//        System.out.println(gamePageController.highest_pause.getBoundsInParent());
+        gamePageController.highest_pause.setLayoutX(651-gamePageController.highest_pause.getBoundsInParent().getWidth());
+
+        score.toFront();
+        cherries.toFront();
+//        System.out.println(gamePane.getChildren());
+        gamePauseMenu.setOpacity(0);
+        gamePauseMenu.setVisible(true);
+        Timeline timelineGamePauseMenuFade=new Timeline(
+                new KeyFrame(Duration.ZERO,new KeyValue(gamePauseMenu.opacityProperty(),0)),
+                new KeyFrame(Duration.millis(300),new KeyValue(gamePauseMenu.opacityProperty(),1))
+        );
+        timelineGamePauseMenuFade.setOnFinished(event -> {
+            getAnimationList().remove(timelineGamePauseMenuFade);
+        });
+        timelineGamePauseMenuFade.play();
+        getAnimationList().add(timelineGamePauseMenuFade);
     }
+
 
     public void resurrectGame(){
         pacman.restart();
@@ -240,7 +315,14 @@ public class Game_Logic {
     private int pacmanDown=0;
     private int pacmanUp=1;
     private int stopKeyboard=0;
+    private int gamePauseMenuBinary=0;
+
+    private int upToNavigateTextCount=0;
     public void resetKeyboard(ActionEvent event){
+        if(upToNavigateTextCount==2){
+            gamePageController.play_text.setVisible(false);
+        }
+        gamePageController.play_text.setText("*PRESS SPACE TO PLAY*");
         pacmanRotated =0;
         key_pressed=0;
     }
@@ -248,51 +330,67 @@ public class Game_Logic {
     public void keyboardControl(KeyEvent keyEvent) {
 //        System.out.println(stopKeyboard);
         if(stopKeyboard==0) {
-            if (pacmanRotated == 0) {
-                if (keyEvent.getCode() == KeyCode.SPACE) {
-                    pacman.rotate(-90);
-                    pacmanRotated = 1;
-                }
-            }
-            if (key_pressed == 0) {
-                if (keyEvent.getEventType() == KeyEvent.KEY_RELEASED && keyEvent.getCode() == KeyCode.SPACE) {
-                    double cherryRandom=new Random().nextDouble();
-                    if(cherryRandom<0.8) {
-                        cherry = new Cherry();
-                        cherry.setGameLogic(this);
-                        cherry.addCherry();
+            if(keyEvent.getCode()==KeyCode.ESCAPE && gamePauseMenuBinary==0){
+
+                gamePauseMenu();
+                gamePauseMenuBinary=1;
+            }else {
+                if (pacmanRotated == 0) {
+                    if (keyEvent.getCode() == KeyCode.SPACE) {
+                        pacman.rotate(-90);
+                        pacmanRotated = 1;
                     }
-                    key_pressed = 1;
-                    pacmanStick.StopIncreaseLength();
-                    pacman.rotateBack(90);
-                    pacman.relocate(pacmanStick.getLine().getLayoutX() + Math.abs(pacmanStick.getLine().getEndY()) + 37);
-
                 }
-                if (keyEvent.getCode() == KeyCode.SPACE && keyEvent.getEventType() != KeyEvent.KEY_RELEASED) {
-                    pacmanStick.IncreaseLength();
-                }
-            }
-            if (pacmanRotated == 1 && key_pressed == 1) {
-                if (keyEvent.getCode() == KeyCode.DOWN && pacmanDown == 0 && pacmanUp == 1) {
+                if (key_pressed == 0) {
+                    if (keyEvent.getEventType() == KeyEvent.KEY_RELEASED && keyEvent.getCode() == KeyCode.SPACE) {
+                        gamePageController.play_text.setText("*PRESS UP/DOWN ARROWS TO NAVIGATE*");
+                        upToNavigateTextCount++;
+                        double cherryRandom = new Random().nextDouble();
+                        if (cherryRandom < 0.8) {
+                            cherry = new Cherry();
+                            cherry.setGameLogic(this);
+                            cherry.addCherry();
+                        }
+                        key_pressed = 1;
+                        pacmanStick.StopIncreaseLength();
+                        pacman.rotateBack(90);
+                        pacman.relocate(pacmanStick.getLine().getLayoutX() + Math.abs(pacmanStick.getLine().getEndY()) + pacman.getPacman().getPacman_costume().getFitWidth());
 
-                    Timeline timelineGoDown = new Timeline(
-                            new KeyFrame(Duration.ZERO, new KeyValue(pacman.getPacman().getPacman_costume().layoutYProperty(), pacman.getPacman().getPacman_costume().getLayoutY())),
-                            new KeyFrame(Duration.millis(100), new KeyValue(pacman.getPacman().getPacman_costume().layoutYProperty(), pacman.getPacman().getPacman_costume().getLayoutY() + 50))
-                    );
-                    timelineGoDown.play();
+                    }
+                    if (keyEvent.getCode() == KeyCode.SPACE && keyEvent.getEventType() != KeyEvent.KEY_RELEASED) {
+                        pacmanStick.IncreaseLength();
+                    }
+                }
+                if (pacmanRotated == 1 && key_pressed == 1) {
+                    if (keyEvent.getCode() == KeyCode.DOWN && pacmanDown == 0 && pacmanUp == 1) {
+
+                        Timeline timelineGoDown = new Timeline(
+                                new KeyFrame(Duration.ZERO, new KeyValue(pacman.getPacman().getPacman_costume().layoutYProperty(), pacman.getPacman().getPacman_costume().getLayoutY())),
+                                new KeyFrame(Duration.millis(100), new KeyValue(pacman.getPacman().getPacman_costume().layoutYProperty(), pacman.getPacman().getPacman_costume().getLayoutY() + 50))
+                        );
+                        timelineGoDown.setOnFinished(event -> {
+                            getAnimationList().remove(timelineGoDown);
+                        });
+                        timelineGoDown.play();
+                        getAnimationList().add(timelineGoDown);
 //                pacman.getPacman().getPacman_costume().setLayoutY(pacman.getPacman().getPacman_costume().getLayoutY()+50);
-                    pacmanDown = 1;
-                    pacmanUp = 0;
-                }
-                if (keyEvent.getCode() == KeyCode.UP && pacmanDown == 1 && pacmanUp == 0) {
-                    Timeline timelineGoUp = new Timeline(
-                            new KeyFrame(Duration.ZERO, new KeyValue(pacman.getPacman().getPacman_costume().layoutYProperty(), pacman.getPacman().getPacman_costume().getLayoutY())),
-                            new KeyFrame(Duration.millis(100), new KeyValue(pacman.getPacman().getPacman_costume().layoutYProperty(), pacman.getPacman().getPacman_costume().getLayoutY() - 50))
-                    );
-                    timelineGoUp.play();
+                        pacmanDown = 1;
+                        pacmanUp = 0;
+                    }
+                    if (keyEvent.getCode() == KeyCode.UP && pacmanDown == 1 && pacmanUp == 0) {
+                        Timeline timelineGoUp = new Timeline(
+                                new KeyFrame(Duration.ZERO, new KeyValue(pacman.getPacman().getPacman_costume().layoutYProperty(), pacman.getPacman().getPacman_costume().getLayoutY())),
+                                new KeyFrame(Duration.millis(100), new KeyValue(pacman.getPacman().getPacman_costume().layoutYProperty(), pacman.getPacman().getPacman_costume().getLayoutY() - 50))
+                        );
+                        timelineGoUp.setOnFinished(event -> {
+                            getAnimationList().remove(timelineGoUp);
+                        });
+                        timelineGoUp.play();
+                        getAnimationList().add(timelineGoUp);
 //                pacman.getPacman().getPacman_costume().setLayoutY(pacman.getPacman().getPacman_costume().getLayoutY()-50);
-                    pacmanDown = 0;
-                    pacmanUp = 1;
+                        pacmanDown = 0;
+                        pacmanUp = 1;
+                    }
                 }
             }
         }
@@ -400,8 +498,19 @@ public class Game_Logic {
         this.stopKeyboard = stopKeyboard;
     }
 
+    public void setGamePauseMenuBinary(int gamePauseMenuBinary) {
+        this.gamePauseMenuBinary = gamePauseMenuBinary;
+    }
 
     public Text getCherries() {
         return cherries;
+    }
+
+    public ArrayList<Animation> getAnimationList() {
+        return animationList;
+    }
+
+    public void setAnimationList(ArrayList<Animation> animationList) {
+        this.animationList = animationList;
     }
 }
