@@ -138,6 +138,7 @@ public class Pacman {
         timelineGoToStart.setCycleCount(1);
         timelineGoToStart.setOnFinished(event->{
             gameLogic.resetKeyboard(event);
+            gameLogic.playTextCheck();
             gameLogic.getAnimationList().remove(timelineGoToStart);
         });
         timelineGoToStart.play();

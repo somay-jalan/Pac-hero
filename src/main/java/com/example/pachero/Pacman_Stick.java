@@ -119,4 +119,12 @@ public class Pacman_Stick {
     public void setGameLogic(Game_Logic gameLogic) {
         this.gameLogic = gameLogic;
     }
+
+    public double getStartLayoutX() {
+        return startLayoutX;
+    }
+
+    public double getStartLayoutY() {
+        return startLayoutY;
+    }
 }

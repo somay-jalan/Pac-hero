@@ -27,7 +27,7 @@
                   <Image url="@../../../images/LoadPageBG.png" />
                </image>
             </ImageView>
-            <Text fill="YELLOW" layoutX="452.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="pac-man" text="Rules">
+            <Text fill="YELLOW" layoutX="452.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="pac-man" text="rules">
                <font>
                   <Font size="60.0" />
                </font></Text>

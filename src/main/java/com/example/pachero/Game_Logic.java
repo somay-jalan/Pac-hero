@@ -125,6 +125,9 @@ public class Game_Logic {
             }
         }catch (Exception e){
             System.out.println("ERROR");
+            pacman.getPacman().getPacman_costume().setImage(new Image("file:src/main/resources/images/costumes/pacman/pacman_open.png"));
+            pacman.getPacman().setOpen_url("file:src/main/resources/images/costumes/pacman/pacman_open.png");
+            pacman.getPacman().setClose_url("file:src/main/resources/images/costumes/pacman/pacman_close.png");
         }
     }
 
@@ -339,6 +342,7 @@ public class Game_Logic {
         pacmanStick.goToStart();
         setStopKeyboard(0);
         resetKeyboard(new ActionEvent());
+        playTextCheck();
         getData();
     }
 
@@ -350,11 +354,14 @@ public class Game_Logic {
     private int gamePauseMenuBinary=0;
 
     private int upToNavigateTextCount=0;
-    public void resetKeyboard(ActionEvent event){
+
+    public void playTextCheck(){
         if(upToNavigateTextCount==2){
             gamePageController.play_text.setVisible(false);
         }
         gamePageController.play_text.setText("*PRESS SPACE TO PLAY*");
+    }
+    public void resetKeyboard(ActionEvent event){
         pacmanRotated =0;
         key_pressed=0;
     }

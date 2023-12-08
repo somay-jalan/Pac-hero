@@ -34,7 +34,7 @@
                   <Image url="@../../../images/cherry.png" />
                </image>
             </ImageView>
-            <Text fill="YELLOW" layoutX="462.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="pac-man" text="Shop">
+            <Text fill="YELLOW" layoutX="462.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="pac-man" text="shop">
                <font>
                   <Font size="60.0" />
                </font>
