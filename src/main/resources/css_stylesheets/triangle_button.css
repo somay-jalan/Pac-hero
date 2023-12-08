@@ -1,0 +1,11 @@
+.triangle{
+    -fx-shape: "M150 0 L75 200 L225 200 Z";
+    -fx-border-color: #FF0000;
+    -fx-background-color:"transparent";
+}
+
+.triangle:hover{
+    -fx-background-color: #FF0000;
+
+
+}

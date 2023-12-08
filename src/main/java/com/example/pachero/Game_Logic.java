@@ -63,7 +63,6 @@ public class Game_Logic {
         this.gameOverMenu =gameOverMenu;
         this.gamePauseMenu=gamePauseMenu;
         this.gamePageController=gamePageController;
-        this.gamePageController=gamePageController;
         animationList=new ArrayList<>();
     }
 
@@ -96,11 +95,42 @@ public class Game_Logic {
         }catch (Exception e){
             cherries.setText(String.valueOf(0));
         }
+        try {
+            Path path = Paths.get("src/main/resources/Data/PacmanCostumeData.txt");
+            Scanner scanner = new Scanner(path);
+            for(int i=0;i<5;i++){
+                if(Integer.parseInt(scanner.nextLine())==1){
+                    if(i==0){
+                        pacman.getPacman().getPacman_costume().setImage(new Image("file:src/main/resources/images/costumes/pacman/pacman_open.png"));
+                        pacman.getPacman().setOpen_url("file:src/main/resources/images/costumes/pacman/pacman_open.png");
+                        pacman.getPacman().setClose_url("file:src/main/resources/images/costumes/pacman/pacman_close.png");
+                    } else if (i==1) {
+                        pacman.getPacman().getPacman_costume().setImage(new Image("file:src/main/resources/images/costumes/pokemonPacman/pokemonPacman_open.png"));
+                        pacman.getPacman().setOpen_url("file:src/main/resources/images/costumes/pokemonPacman/pokemonPacman_open.png");
+                        pacman.getPacman().setClose_url("file:src/main/resources/images/costumes/pokemonPacman/pokemonPacman_close.png");
+                    } else if(i==4){
+                        pacman.getPacman().getPacman_costume().setImage(new Image("file:src/main/resources/images/costumes/piratePacman/pacmanPirate_open.png"));
+                        pacman.getPacman().setOpen_url("file:src/main/resources/images/costumes/piratePacman/pacmanPirate_open.png");
+                        pacman.getPacman().setClose_url("file:src/main/resources/images/costumes/piratePacman/pacmanPirate_close.png");
+                    } else if(i==2){
+                        pacman.getPacman().getPacman_costume().setImage(new Image("file:src/main/resources/images/costumes/spanishPacman/spanishPacman_open.png"));
+                        pacman.getPacman().setOpen_url("file:src/main/resources/images/costumes/spanishPacman/spanishPacman_open.png");
+                        pacman.getPacman().setClose_url("file:src/main/resources/images/costumes/spanishPacman/spanishPacman_close.png");
+                    } else if (i==3) {
+                        pacman.getPacman().getPacman_costume().setImage(new Image("file:src/main/resources/images/costumes/vikingPacman/vikingPacman_open.png"));
+                        pacman.getPacman().setOpen_url("file:src/main/resources/images/costumes/vikingPacman/vikingPacman_open.png");
+                        pacman.getPacman().setClose_url("file:src/main/resources/images/costumes/vikingPacman/vikingPacman_close.png");
+                    }
+                }
+            }
+        }catch (Exception e){
+            System.out.println("ERROR");
+        }
     }
 
     public void setData(){
         try {
-            if(Integer.parseInt(score.getText())>highScore) {
+            if(Integer.parseInt(score.getText())>=highScore) {
                 FileWriter myWriter = new FileWriter("src/main/resources/Data/HighScoreData.txt");
                 myWriter.write(score.getText());
                 myWriter.close();
@@ -162,7 +192,7 @@ public class Game_Logic {
 
 
     public void pacmanPositionCheck(ActionEvent event){
-        if(/*next_platform.getRectangle().getLayoutX()<=pacman.getPacman().getPacman_costume().getLayoutX() &&*/ next_platform.getRectangle().getLayoutX()<=pacman.getPacman().getPacman_costume().getBoundsInParent().getMaxX() && pacman.getPacman().getPacman_costume().getLayoutX()<=next_platform.getRectangle().getBoundsInParent().getMaxX() && pacman.getPacman().getPacman_costume().getLayoutY()==pacman.getStartLayoutY()){
+        if(next_platform.getRectangle().getLayoutX()<=pacman.getPacman().getPacman_costume().getLayoutX() && /*next_platform.getRectangle().getLayoutX()<=pacman.getPacman().getPacman_costume().getBoundsInParent().getMaxX() && */pacman.getPacman().getPacman_costume().getLayoutX()<=next_platform.getRectangle().getBoundsInParent().getMaxX() && pacman.getPacman().getPacman_costume().getLayoutY()==pacman.getStartLayoutY()){
             pacman.goToStart();
             perfect.animationFadeOut();
             pacmanStick.goToStart();
@@ -184,7 +214,7 @@ public class Game_Logic {
             if(Integer.parseInt(score.getText())>highScore && highScoreAnimation==0){
                 highScoreAnimation=1;
                 highScoreAnimation();
-                highScore=Integer.parseInt(score.getText());
+                setData();
             }
             pacman.getPacman().getPacman_costume().toFront();
 //            rotated=0;
@@ -247,13 +277,14 @@ public class Game_Logic {
         );
         timelineText.setOnFinished(event -> {
             getAnimationList().remove(timelineText);
+            rightStripe.setOpacity(0);
+            leftStripe.setOpacity(0);
+            highScoreText.setOpacity(0);
         });
         timelineText.play();
         getAnimationList().add(timelineText);
         gamePane.getChildren().addAll(leftStripe,rightStripe,highScoreText);
-        rightStripe.setOpacity(0);
-        leftStripe.setOpacity(0);
-        highScoreText.setOpacity(0);
+
     }
 
     public void gameEndMenu(){
@@ -366,8 +397,8 @@ public class Game_Logic {
                     if (keyEvent.getCode() == KeyCode.DOWN && pacmanDown == 0 && pacmanUp == 1) {
 
                         Timeline timelineGoDown = new Timeline(
-                                new KeyFrame(Duration.ZERO, new KeyValue(pacman.getPacman().getPacman_costume().layoutYProperty(), pacman.getPacman().getPacman_costume().getLayoutY())),
-                                new KeyFrame(Duration.millis(100), new KeyValue(pacman.getPacman().getPacman_costume().layoutYProperty(), pacman.getPacman().getPacman_costume().getLayoutY() + 50))
+                                new KeyFrame(Duration.ZERO, new KeyValue(pacman.getPacman().getPacman_costume().layoutYProperty(), pacman.getPacman().getPacman_costume().getLayoutY()),new KeyValue(pacman.getPacman().getPacman_costume().scaleYProperty(),pacman.getPacman().getPacman_costume().getScaleY())),
+                                new KeyFrame(Duration.millis(100), new KeyValue(pacman.getPacman().getPacman_costume().layoutYProperty(), pacman.getPacman().getPacman_costume().getLayoutY() + 50),new KeyValue(pacman.getPacman().getPacman_costume().scaleYProperty(),-1))
                         );
                         timelineGoDown.setOnFinished(event -> {
                             getAnimationList().remove(timelineGoDown);
@@ -380,8 +411,8 @@ public class Game_Logic {
                     }
                     if (keyEvent.getCode() == KeyCode.UP && pacmanDown == 1 && pacmanUp == 0) {
                         Timeline timelineGoUp = new Timeline(
-                                new KeyFrame(Duration.ZERO, new KeyValue(pacman.getPacman().getPacman_costume().layoutYProperty(), pacman.getPacman().getPacman_costume().getLayoutY())),
-                                new KeyFrame(Duration.millis(100), new KeyValue(pacman.getPacman().getPacman_costume().layoutYProperty(), pacman.getPacman().getPacman_costume().getLayoutY() - 50))
+                                new KeyFrame(Duration.ZERO, new KeyValue(pacman.getPacman().getPacman_costume().layoutYProperty(), pacman.getPacman().getPacman_costume().getLayoutY()),new KeyValue(pacman.getPacman().getPacman_costume().scaleYProperty(),pacman.getPacman().getPacman_costume().getScaleY())),
+                                new KeyFrame(Duration.millis(100), new KeyValue(pacman.getPacman().getPacman_costume().layoutYProperty(), pacman.getPacman().getPacman_costume().getLayoutY() - 50),new KeyValue(pacman.getPacman().getPacman_costume().scaleYProperty(),1))
                         );
                         timelineGoUp.setOnFinished(event -> {
                             getAnimationList().remove(timelineGoUp);

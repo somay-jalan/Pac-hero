@@ -1,6 +1,7 @@
 package com.example.pachero;
 import javafx.animation.*;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 
@@ -10,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -68,6 +70,12 @@ public class Game_page_controller implements Initializable {
     public Text pause_text;
     public Text play_text;
     public ImageView gamePageBG;
+    public AnchorPane topPane;
+    public Rectangle resurrectRectangle;
+    public Rectangle resumePauseBox;
+    public Rectangle startOverPauseBox;
+    public Rectangle exitPauseBox;
+    public Rectangle savePauseBox;
 
 
     @Override
@@ -281,6 +289,95 @@ public class Game_page_controller implements Initializable {
         gameLogic.setData();
         saveText.setText("SAVED!");
     }
+
+    public void exitGame(MouseEvent event){
+        Timeline timelineFadeOut=new Timeline(
+                new KeyFrame(Duration.ZERO,new KeyValue(backPage.opacityProperty(),1)),
+                new KeyFrame(Duration.millis(500),new KeyValue(backPage.opacityProperty(),0))
+        );
+        timelineFadeOut.play();
+        timelineFadeOut.setOnFinished(event1 -> {
+            try {
+                loadLoadPage(event);
+            } catch (IOException e) {
+                System.out.println("ERROR");
+            }
+        });
+    }
+
+    private void loadLoadPage(MouseEvent event) throws IOException {
+        Stage stage;
+        Parent root;
+        Scene scene;
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Load_page.fxml")));
+        stage=(Stage)((Node)event.getSource()).getScene().getWindow();
+        scene=new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    @FXML
+    private void hoverResurrect(MouseEvent event){
+        resurrectRectangle.setStroke(Color.WHITE);
+    }
+    @FXML
+    private void hoverResurrectExit(MouseEvent event){
+        resurrectRectangle.setStroke(Color.BLACK);
+    }
+
+    @FXML
+    private void hoverRestart(MouseEvent event){
+        restart_button.setStroke(Color.WHITE);
+    }
+    @FXML
+    private void hoverRestartExit(MouseEvent event){
+        restart_button.setStroke(Color.BLACK);
+    }
+
+    @FXML
+    private void hoverExit(MouseEvent event){
+        exit_button.setStroke(Color.WHITE);
+    }
+    @FXML
+    private void hoverExitExit(MouseEvent event){
+        exit_button.setStroke(Color.BLACK);
+    }
+
+    @FXML
+    private void hoverGamePauseBox(MouseEvent event){
+        resumePauseBox.setStroke(Color.WHITE);
+    }
+    @FXML
+    private void hoverGamePauseBoxExit(MouseEvent event){
+        resumePauseBox.setStroke(Color.BLACK);
+    }
+
+    @FXML
+    private void hoverSavePauseBox(MouseEvent event){
+        savePauseBox.setStroke(Color.WHITE);
+    }
+    @FXML
+    private void hoverSavePauseBoxExit(MouseEvent event){
+        savePauseBox.setStroke(Color.BLACK);
+    }
+
+    @FXML
+    private void hoverStartOverPauseBox(MouseEvent event){
+        startOverPauseBox.setStroke(Color.WHITE);
+    }
+    @FXML
+    private void hoverStartOverPauseBoxExit(MouseEvent event){
+        startOverPauseBox.setStroke(Color.BLACK);
+    }
+    @FXML
+    private void hoverExitPauseBox(MouseEvent event){
+        exitPauseBox.setStroke(Color.WHITE);
+    }
+    @FXML
+    private void hoverExitPauseBoxExit(MouseEvent event){
+        exitPauseBox.setStroke(Color.BLACK);
+    }
+
+
 }
 
 

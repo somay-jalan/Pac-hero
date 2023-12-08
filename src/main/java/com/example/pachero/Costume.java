@@ -3,7 +3,9 @@ package com.example.pachero;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class Costume {
+import java.io.Serializable;
+
+public class Costume implements Serializable {
 
     private ImageView pacman_costume;
     private String close_url;
@@ -12,8 +14,6 @@ public class Costume {
 
     public Costume(ImageView pacman_costume_open){
         this.pacman_costume=pacman_costume_open;
-        open_url=this.pacman_costume.getImage().getUrl();
-        close_url=open_url.replace("open","close");
     }
 
     public ImageView getPacman_costume() {
@@ -34,5 +34,17 @@ public class Costume {
 
     public String getOpen_url() {
         return open_url;
+    }
+
+    public void setPacman_costume(ImageView pacman_costume) {
+        this.pacman_costume = pacman_costume;
+    }
+
+    public void setClose_url(String close_url) {
+        this.close_url = close_url;
+    }
+
+    public void setOpen_url(String open_url) {
+        this.open_url = open_url;
     }
 }

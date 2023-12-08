@@ -10,7 +10,7 @@ import javafx.util.Duration;
 public class Pacman {
 
     private final double startLayoutX=291;
-    private final double startLayoutY=325;
+    private final double startLayoutY=320;
 
     private Costume pacman;
 
@@ -167,6 +167,7 @@ public class Pacman {
         timelineOblivion.play();
         gameLogic.getAnimationList().add(timelineOblivion);
         timelineOblivion.setOnFinished(event -> {
+            gameLogic.setData();
             gameLogic.getAnimationList().remove(timelineOblivion);
             Timeline timelineShake=new Timeline(
                     new KeyFrame(Duration.ZERO,new KeyValue(gameLogic.getGamePane().layoutXProperty(),gameLogic.getGamePane().getLayoutX()),new KeyValue(gameLogic.getGamePane().layoutYProperty(),gameLogic.getGamePane().getLayoutY())),
@@ -180,7 +181,7 @@ public class Pacman {
             });
             timelineShake.play();
             gameLogic.getAnimationList().add(timelineShake);
-            gameLogic.setData();
+            gameLogic.gameEndMenu();
 
         });
         Timeline timelineRotate=new Timeline(
@@ -189,7 +190,7 @@ public class Pacman {
         );
         timelineRotate.setCycleCount(3);
         timelineRotate.setOnFinished(event -> {
-            gameLogic.gameEndMenu();
+
             gameLogic.getAnimationList().remove(timelineRotate);
         });
         timelineRotate.play();

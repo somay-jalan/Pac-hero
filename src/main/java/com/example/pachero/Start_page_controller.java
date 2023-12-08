@@ -52,23 +52,21 @@ public class Start_page_controller implements Initializable {
         fadeTransition.setToValue(0);
         fadeTransition.setOnFinished(event1 -> {
             try {
-                loadGamePage(event);
+                loadLoadPage(event);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         });
         fadeTransition.play();
     }
-    private void loadGamePage(ActionEvent event) throws IOException {
+    private void loadLoadPage(ActionEvent event) throws IOException {
         Stage stage;
         Parent root;
         Scene scene;
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Game_page.fxml")));
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Load_page.fxml")));
         stage=(Stage)((Node)event.getSource()).getScene().getWindow();
         scene=new Scene(root);
         stage.setScene(scene);
-        scene.setOnKeyPressed(Game_page_controller.gameLogic::keyboardControl);
-        scene.setOnKeyReleased(Game_page_controller.gameLogic::keyboardControl);
         stage.show();
     }
 }

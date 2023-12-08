@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -10,7 +11,7 @@
 <?import javafx.scene.text.Text?>
 
 <VBox fx:id="startpage" alignment="CENTER" prefHeight="567.0" prefWidth="1080.0" stylesheets="@../../../css_stylesheets/pacman_font.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pachero.Start_page_controller">
-   <AnchorPane prefHeight="200.0" prefWidth="200.0">
+   <AnchorPane prefHeight="567.2" prefWidth="1080.0">
       <children>
          <ImageView fitHeight="843.0" fitWidth="1080.0" pickOnBounds="true" preserveRatio="true">
             <image>
@@ -29,7 +30,7 @@
                </ImageView>
                <Text fx:id="eater" fill="YELLOW" layoutX="250.0" layoutY="484.0" lineSpacing="5.0" strokeDashOffset="50.0" strokeLineCap="BUTT" strokeLineJoin="ROUND" strokeType="INSIDE" styleClass="pac-man" text="1" textAlignment="CENTER" wrappingWidth="82.4000244140625" x="100.0">
                   <font>
-                  <Font size="80.0" />
+                     <Font size="80.0" />
                   </font>
                </Text>
                <Text fx:id="ghost" fill="YELLOW" layoutX="583.0" layoutY="489.0" strokeType="INSIDE" strokeWidth="100.0" styleClass="pac-man" text="9" textAlignment="CENTER">
@@ -47,7 +48,7 @@
                      <Font size="80.0" />
                   </font>
                </Text>
-               <Text fx:id="nextpage" fill="RED" layoutX="260.0" layoutY="541.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="pixeboy" text="Click anywhere to continue">
+               <Text fx:id="nextpage" fill="RED" layoutX="310.0" layoutY="540.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="pixeboy" text="Click anywhere to continue">
                   <font>
                      <Font size="45.0" />
                   </font>
@@ -56,6 +57,9 @@
             </children>
          </AnchorPane>
       </children>
+      <cursor>
+         <Cursor fx:constant="HAND" />
+      </cursor>
    </AnchorPane>
    <opaqueInsets>
       <Insets />

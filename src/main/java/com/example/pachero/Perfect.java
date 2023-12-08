@@ -163,6 +163,9 @@ public class Perfect {
         );
         timelineText.setOnFinished(event -> {
             gameLogic.getAnimationList().remove(timelineText);
+            rightStripe.setOpacity(0);
+            leftStripe.setOpacity(0);
+            perfectText.setOpacity(0);
         });
         timelineText.play();
         gameLogic.getAnimationList().add(timelineText);
@@ -171,9 +174,8 @@ public class Perfect {
         gameLogic.getScore().setWrappingWidth(gameLogic.getScore().getText().length()*55);
         if(gameLogic.getScore().getText().length()!=(String.valueOf(Integer.parseInt(gameLogic.getScore().getText())-1)).length()) {
             gameLogic.getScore().setLayoutX(gameLogic.getScore().getLayoutX() - (gameLogic.getScore().getWrappingWidth() - 55));
-        }        rightStripe.setOpacity(0);
-        leftStripe.setOpacity(0);
-        perfectText.setOpacity(0);
+        }
+
     }
 
     public void setGameLogic(Game_Logic gameLogic) {

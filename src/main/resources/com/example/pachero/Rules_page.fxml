@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="567.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pachero.Rules_page_controller">
+   <children>
+      <ImageView fitHeight="567.0" fitWidth="1080.0" layoutX="180.0" pickOnBounds="true" preserveRatio="true" scaleX="1.5">
+         <image>
+            <Image url="@../../../images/A_black_image.jpg" />
+         </image>
+      </ImageView>
+      <AnchorPane fx:id="rulesPage" prefHeight="567.0" prefWidth="1080.0">
+         <children>
+            <ImageView fitHeight="567.0" fitWidth="1080.0" layoutX="100.0" pickOnBounds="true" preserveRatio="true" scaleX="1.25">
+               <image>
+                  <Image url="@../../../images/LoadPageBG.png" />
+               </image>
+            </ImageView>
+            <Text fill="YELLOW" layoutX="452.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="pac-man" text="Rules">
+               <font>
+                  <Font size="60.0" />
+               </font></Text>
+            <Rectangle arcHeight="25.0" arcWidth="25.0" height="318.0" layoutX="188.0" layoutY="150.0" stroke="BLACK" strokeType="INSIDE" width="744.0">
+               <fill>
+                  <LinearGradient endX="0.5095056816652247" endY="1.0" startX="0.5095056979828461">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.2549019753932953" blue="0.45098039507865906" />
+                           </color>
+                        </Stop>
+                        <Stop offset="0.16419919246298792">
+                           <color>
+                              <Color red="0.2549019753932953" blue="0.45098039507865906" />
+                           </color>
+                        </Stop>
+                        <Stop offset="0.576043068640646">
+                           <color>
+                              <Color red="0.4000000059604645" blue="0.3137255012989044" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.5686274766921997" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </fill>
+            </Rectangle>
+            <Rectangle arcHeight="20.0" arcWidth="20.0" height="280.0" layoutX="210.0" layoutY="169.0" stroke="BLACK" strokeType="INSIDE" width="700.0" />
+            <Text fx:id="cherry" fill="WHITE" layoutX="895.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="pixeboy" text="TEXT" textAlignment="JUSTIFY">
+               <font>
+                  <Font size="40.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" layoutX="207.0" layoutY="316.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="pixeboy" text="       3. COLLECT CHerries" wrappingWidth="700.0">
+               <font>
+                  <Font size="40.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" layoutX="207.0" layoutY="266.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="pixeboy" text="       2. DODGE THE GHOSTS" wrappingWidth="700.0">
+               <font>
+                  <Font size="40.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" layoutX="207.0" layoutY="366.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="pixeboy" text="       4. EXTRA POINTS FOR ACCURATE LANDING" wrappingWidth="700.0">
+               <font>
+                  <Font size="40.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" layoutX="207.0" layoutY="416.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="pixeboy" text="       5. THAT'S PRETTY MUCH IT" wrappingWidth="700.0">
+               <font>
+                  <Font size="40.0" />
+               </font>
+            </Text>
+            <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="395.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../images/bulb.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="70.0" fitWidth="70.0" layoutX="980.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../images/cherry.png" />
+               </image>
+            </ImageView>
+            <Text fill="WHITE" layoutX="207.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="pixeboy" text="       1. DO NOT let pac hero die" textAlignment="JUSTIFY" wrappingWidth="700.0">
+               <font>
+                  <Font size="40.0" />
+               </font>
+            </Text>
+            <ImageView fx:id="back" fitHeight="50.0" fitWidth="50.0" layoutX="62.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../images/back.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <Button fx:id="backButton" layoutX="62.0" layoutY="39.0" mnemonicParsing="false" onAction="#load_button" onMouseEntered="#hoverLoadButton" onMouseExited="#hoverLoadButtonExit" prefHeight="50.0" prefWidth="50.0" style="-fx-opacity: 0;" text="Button">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+      </AnchorPane>
+   </children>
+   <stylesheets>
+      <URL value="@../../../css_stylesheets/pacman_font.css" />
+      <URL value="@../../../css_stylesheets/pixeboy_font.css" />
+   </stylesheets>
+</AnchorPane>
