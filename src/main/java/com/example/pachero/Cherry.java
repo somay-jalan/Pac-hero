@@ -50,7 +50,7 @@ public class Cherry{
         checkCherryPacmanCollision.addListener(collisionListener);
     }
     public void addCherry(){
-        cherry=new ImageView(new Image("file:/home/somay/IdeaProjects/Pac-hero/src/main/resources/images/cherry.png"));
+        cherry=new ImageView(new Image("file:src/main/resources/images/cherry.png"));
         cherry.setLayoutY(375);
 //        System.out.println("NEW CHERRY");
         cherry.setFitHeight(50);
