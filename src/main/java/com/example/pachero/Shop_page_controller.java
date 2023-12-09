@@ -89,6 +89,7 @@ public class Shop_page_controller implements Initializable {
             cherry.setLayoutX(1000-(cherry.getBoundsInParent().getMaxX()-cherry.getBoundsInParent().getMinX()));
             scanner.close();
         }catch (Exception e){
+            System.out.println(e.getMessage());
             cherry.setText(String.valueOf(0));
         }
         try {
@@ -132,7 +133,7 @@ public class Shop_page_controller implements Initializable {
             }
             scanner.close();
         }catch (Exception e){
-            System.out.println("An error occured");
+            System.out.println(e.getMessage());
         }
     }
 //    private void serializeCostumeAtStart(){
@@ -176,7 +177,7 @@ public class Shop_page_controller implements Initializable {
             try {
                 loadLoadPage(event);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                System.out.println(e.getMessage());
             }
         });
         fadeTransition.play();
@@ -370,11 +371,11 @@ public class Shop_page_controller implements Initializable {
                         myWriter.write(cherry.getText());
                         myWriter.close();
                     } catch (IOException e) {
-                        System.out.println("An error occurred.");
+                        System.out.println(e.getMessage());
                     }
                     getData();
                 }catch (Exception e){
-                    System.out.println("An error occurred here");
+                    System.out.println(e.getMessage());
                 }
             }
         }else if(pokemonPacmanText.getText().equalsIgnoreCase("equip")){
@@ -403,7 +404,7 @@ public class Shop_page_controller implements Initializable {
                 fileWriter.close();
                 getData();
             }catch (Exception e){
-                System.out.println("An error occurred heree");
+                System.out.println(e.getMessage());
             }
         }
     }
@@ -441,11 +442,11 @@ public class Shop_page_controller implements Initializable {
                         myWriter.write(cherry.getText());
                         myWriter.close();
                     } catch (IOException e) {
-                        System.out.println("An error occurred.");
+                        System.out.println(e.getMessage());
                     }
                     getData();
                 }catch (Exception e){
-                    System.out.println("An error occurred here");
+                    System.out.println(e.getMessage());
                 }
             }
         }else if(pacmanText.getText().equalsIgnoreCase("equip")){
@@ -474,7 +475,7 @@ public class Shop_page_controller implements Initializable {
                 fileWriter.close();
                 getData();
             }catch (Exception e){
-                System.out.println("An error occurred heree");
+                System.out.println(e.getMessage());
             }
         }
     }
@@ -511,11 +512,11 @@ public class Shop_page_controller implements Initializable {
                         myWriter.write(cherry.getText());
                         myWriter.close();
                     } catch (IOException e) {
-                        System.out.println("An error occurred.");
+                        System.out.println(e.getMessage());
                     }
                     getData();
                 }catch (Exception e){
-                    System.out.println("An error occurred here");
+                    System.out.println(e.getMessage());
                 }
             }
         }else if(spanishPacmanText.getText().equalsIgnoreCase("equip")){
@@ -544,7 +545,7 @@ public class Shop_page_controller implements Initializable {
                 fileWriter.close();
                 getData();
             }catch (Exception e){
-                System.out.println("An error occurred heree");
+                System.out.println(e.getMessage());
             }
         }
     }
@@ -581,11 +582,11 @@ public class Shop_page_controller implements Initializable {
                         myWriter.write(cherry.getText());
                         myWriter.close();
                     } catch (IOException e) {
-                        System.out.println("An error occurred.");
+                        System.out.println(e.getMessage());
                     }
                     getData();
                 }catch (Exception e){
-                    System.out.println("An error occurred here");
+                    System.out.println(e.getMessage());
                 }
             }
         }else if(vikingPacmanText.getText().equalsIgnoreCase("equip")){
@@ -614,7 +615,7 @@ public class Shop_page_controller implements Initializable {
                 fileWriter.close();
                 getData();
             }catch (Exception e){
-                System.out.println("An error occurred heree");
+                System.out.println(e.getMessage());
             }
         }
     }
@@ -652,11 +653,11 @@ public class Shop_page_controller implements Initializable {
                         myWriter.write(cherry.getText());
                         myWriter.close();
                     } catch (IOException e) {
-                        System.out.println("An error occurred.");
+                        System.out.println(e.getMessage());
                     }
                     getData();
                 }catch (Exception e){
-                    System.out.println("An error occurred here");
+                    System.out.println(e.getMessage());
                 }
             }
         }else if(piratePacmanText.getText().equalsIgnoreCase("equip")){
@@ -685,7 +686,7 @@ public class Shop_page_controller implements Initializable {
                 fileWriter.close();
                 getData();
             }catch (Exception e){
-                System.out.println("An error occurred heree");
+                System.out.println(e.getMessage());
             }
         }
     }

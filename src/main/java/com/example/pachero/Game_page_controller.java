@@ -315,7 +315,7 @@ public class Game_page_controller implements Initializable {
             try {
                 loadLoadPage(event);
             } catch (IOException e) {
-                System.out.println("ERROR");
+                System.out.println(e.getMessage());
             }
         });
     }

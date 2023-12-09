@@ -67,6 +67,7 @@ public class Load_page_controller implements Initializable {
             highscore.setLayoutX(1000-(highscore.getBoundsInParent().getMaxX()-highscore.getBoundsInParent().getMinX()));
             scanner.close();
         }catch (Exception e){
+            System.out.println(e.getMessage());
             highscore.setText(String.valueOf(0));
         }
         try {
@@ -76,6 +77,7 @@ public class Load_page_controller implements Initializable {
             lastScore.setLayoutX(1000-(lastScore.getBoundsInParent().getMaxX()-lastScore.getBoundsInParent().getMinX()));
             scanner.close();
         }catch (Exception e){
+            System.out.println(e.getMessage());
             lastScore.setText(String.valueOf(0));
         }
         try {
@@ -86,6 +88,7 @@ public class Load_page_controller implements Initializable {
             cherry.setLayoutX(1000-(cherry.getBoundsInParent().getMaxX()-cherry.getBoundsInParent().getMinX()));
             scanner.close();
         }catch (Exception e){
+            System.out.println(e.getMessage());
             cherry.setText(String.valueOf(0));
         }
     }
@@ -102,7 +105,7 @@ public class Load_page_controller implements Initializable {
             try {
                 loadGamePage(event);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                System.out.println(e.getMessage());
             }
         });
         fadeTransition.play();
@@ -131,7 +134,7 @@ public class Load_page_controller implements Initializable {
             try {
                 loadShopPage(event);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                System.out.println(e.getMessage());
             }
         });
         fadeTransition.play();
@@ -157,7 +160,7 @@ public class Load_page_controller implements Initializable {
             try {
                 loadRulesPage(event);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                System.out.println(e.getMessage());
             }
         });
         fadeTransition.play();

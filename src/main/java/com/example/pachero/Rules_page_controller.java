@@ -54,6 +54,7 @@ public class Rules_page_controller implements Initializable {
             cherry.setLayoutX(1000-(cherry.getBoundsInParent().getMaxX()-cherry.getBoundsInParent().getMinX()));
             scanner.close();
         }catch (Exception e){
+            System.out.println(e.getMessage());
             cherry.setText(String.valueOf(0));
         }
     }
@@ -80,7 +81,7 @@ public class Rules_page_controller implements Initializable {
             try {
                 loadLoadPage(event);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                System.out.println(e.getMessage());
             }
         });
         fadeTransition.play();

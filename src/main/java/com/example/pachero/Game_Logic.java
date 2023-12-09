@@ -87,6 +87,7 @@ public class Game_Logic {
             highScore=scanner.nextInt();
             scanner.close();
         }catch (Exception e){
+            System.out.println(e.getMessage());
             highScore=0;
         }
         try {
@@ -98,6 +99,7 @@ public class Game_Logic {
             cherries.setLayoutX(945-(cherries.getBoundsInParent().getMaxX()-cherries.getBoundsInParent().getMinX()));
             scanner.close();
         }catch (Exception e){
+            System.out.println(e.getMessage());
             cherries.setText(String.valueOf(0));
         }
         try {
@@ -129,7 +131,7 @@ public class Game_Logic {
                 }
             }
         }catch (Exception e){
-            System.out.println("ERROR");
+            System.out.println(e.getMessage());
             pacman.getPacman().getPacman_costume().setImage(new Image("file:src/main/resources/images/costumes/pacman/pacman_open.png"));
             pacman.getPacman().setOpen_url("file:src/main/resources/images/costumes/pacman/pacman_open.png");
             pacman.getPacman().setClose_url("file:src/main/resources/images/costumes/pacman/pacman_close.png");
@@ -145,7 +147,7 @@ public class Game_Logic {
 //            System.out.println("Successfully wrote to the file.");
             }
         } catch (IOException e) {
-            System.out.println("An error occurred.");
+            System.out.println(e.getMessage());
         }
 
         try {
@@ -154,7 +156,7 @@ public class Game_Logic {
             myWriter.close();
 //            System.out.println("Successfully wrote to the file.");
         } catch (IOException e) {
-            System.out.println("An error occurred.");
+            System.out.println(e.getMessage());
         }
 
         try {
@@ -163,7 +165,7 @@ public class Game_Logic {
             myWriter.close();
 //            System.out.println("Successfully wrote to the file.");
         } catch (IOException e) {
-            System.out.println("An error occurred.");
+            System.out.println(e.getMessage());
         }
     }
 

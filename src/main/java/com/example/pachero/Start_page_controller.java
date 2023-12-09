@@ -63,7 +63,7 @@ public class Start_page_controller implements Initializable {
             try {
                 loadLoadPage(event);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                System.out.println(e.getMessage());
             }
         });
         fadeTransition.play();

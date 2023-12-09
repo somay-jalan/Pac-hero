@@ -4,12 +4,12 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
 import java.io.File;
-
+//TEMPLATE PATTERN IMPLEMENTED
 public abstract class MusicAbstractClass {
     public final void musicRun(String audioFile){
-        Media click_audio = new Media(new File(audioFile).toURI().toString());
-        MediaPlayer clickAudioPlayer = new MediaPlayer(click_audio);
-        clickAudioPlayer.setVolume(0.50);
-        clickAudioPlayer.play();
+        Media audioMedia = new Media(new File(audioFile).toURI().toString());
+        MediaPlayer AudioPlayer = new MediaPlayer(audioMedia);
+        AudioPlayer.setVolume(0.50);
+        AudioPlayer.play();
     }
 }
