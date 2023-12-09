@@ -51,6 +51,7 @@ public class Game_Logic {
     private ArrayList<Animation> animationList;
 
     private Game_page_controller gamePageController;
+    private StickIncreaseMusic stick_inc;
 
     public Game_Logic(Pacman pacman, Platform cur_platform, Platform next_platform, Perfect perfect, Pacman_Stick pacmanStick, AnchorPane gamePane, Text score,Text cherries,AnchorPane gameOverMenu,AnchorPane gamePauseMenu,Game_page_controller gamePageController) {
         this.gamePane=gamePane;
@@ -65,6 +66,9 @@ public class Game_Logic {
         this.gamePauseMenu=gamePauseMenu;
         this.gamePageController=gamePageController;
         animationList=new ArrayList<>();
+        stick_inc= new StickIncreaseMusic();
+        Thread stickIncreaseMusic=new Thread(stick_inc);
+        stickIncreaseMusic.start();
     }
 
     public void GameStop(){
@@ -366,12 +370,15 @@ public class Game_Logic {
         pacmanRotated =0;
         key_pressed=0;
     }
+
+
+
 //KEY BOARD CONTROLS
     public void keyboardControl(KeyEvent keyEvent) {
+
 //        System.out.println(stopKeyboard);
         if(stopKeyboard==0) {
             if(keyEvent.getCode()==KeyCode.ESCAPE && gamePauseMenuBinary==0){
-
                 gamePauseMenu();
                 gamePauseMenuBinary=1;
             }else {
@@ -393,15 +400,13 @@ public class Game_Logic {
                         }
                         key_pressed = 1;
                         pacmanStick.StopIncreaseLength();
+                        stick_inc.getIncreaseAudioPlayer().setVolume(0);
                         pacman.rotateBack(90);
                         pacman.relocate(pacmanStick.getLine().getLayoutX() + Math.abs(pacmanStick.getLine().getEndY()) + pacman.getPacman().getPacman_costume().getFitWidth());
 
                     }
                     if (keyEvent.getCode() == KeyCode.SPACE && keyEvent.getEventType() != KeyEvent.KEY_RELEASED) {
-                        StickIncreaseMusic stick_inc= new StickIncreaseMusic();
-                        Thread stickIncreaseMusic=new Thread(stick_inc);
-                        stickIncreaseMusic.start();
-
+                        stick_inc.getIncreaseAudioPlayer().setVolume(0.5);
                         pacmanStick.IncreaseLength();
                     }
                 }

@@ -9,14 +9,11 @@ import javafx.util.Duration;
 import java.io.File;
 
 
-public class RewardMusic implements Runnable {
+public class RewardMusic extends MusicAbstractClass implements Runnable {
     @Override
     public void run() {
         String cherry_audio = "src/main/resources/music/Reward.mp3";
-        Media cherry = new Media(new File(cherry_audio).toURI().toString());
-        MediaPlayer cherryRewardPlayer = new MediaPlayer(cherry);
-        cherryRewardPlayer.setVolume(0.50);
-        cherryRewardPlayer.play();
+        musicRun(cherry_audio);
     }
 }
 
